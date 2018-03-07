@@ -8,9 +8,6 @@ engine.on('msg', function(data) {
    
     	
 	 if( (data.message=="!n")  || (data.message=="!summon nyan")) {
-	 	
-
-	 	//Used to calculate the sha256 hashes of previous games
 var imported = document.createElement('script');
 imported.src = "https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/core.js";
 document.head.appendChild(imported);
@@ -57,8 +54,8 @@ function crashPointFromHash(serverSeed) {
     return (Math.floor((100 * e - h) / (e - h))/100).toFixed(2);
 };
 
-var table = [];//holds the crash points for previous games
-var tableLength = 4000;//number of games you want to load, if the number is above 10000 it may lag for a couble seconds.
+var table = [];
+var tableLength = 4000;
 var nyan=[];
 var index=[];
 
@@ -86,15 +83,7 @@ function genTable(crash){
 var getEngine = engine.getEngine();
 genTable(getEngine.tableHistory[0].hash);
 console.log(getEngine.tableHistory[0].hash)
-/*
-for(let i=0;i<tableLength;i++)
-{
-	if (getEngine.tableHistory[i]/100>1000) {
-		console.log(getEngine.tableHistory[i]/100);
-	}
-}
-}); */
-//console.log(table);
+
 },1000);
 	 	
 	}
@@ -129,7 +118,7 @@ imported2.src = "https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/componen
 document.head.appendChild(imported2);
 },500);
 setTimeout(function(){
-//JSFiddle code
+
 function divisible(hash, mod) {
     var val = 0;
 
@@ -163,8 +152,8 @@ function crashPointFromHash(serverSeed) {
     return (Math.floor((100 * e - h) / (e - h))/100).toFixed(2);
 };
 
-var table = [];//holds the crash points for previous games
-var tableLength = 1000;//number of games you want to load, if the number is above 10000 it may lag for a couble seconds.
+var table = [];
+var tableLength = 1000;
 var bust50=[];
 var index=[];
 
@@ -191,15 +180,7 @@ function genTable(crash){
 var getEngine = engine.getEngine();
 genTable(getEngine.tableHistory[0].hash);
 console.log(getEngine.tableHistory[0].hash)
-/*
-for(let i=0;i<tableLength;i++)
-{
-	if (getEngine.tableHistory[i]/100>1000) {
-		console.log(getEngine.tableHistory[i]/100);
-	}
-}
-}); */
-//console.log(table);
+
 },1000);
      
 	}
@@ -217,7 +198,7 @@ imported2.src = "https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/componen
 document.head.appendChild(imported2);
 },500);
 setTimeout(function(){
-//JSFiddle code
+
 function divisible(hash, mod) {
     var val = 0;
 
@@ -251,8 +232,8 @@ function crashPointFromHash(serverSeed) {
     return (Math.floor((100 * e - h) / (e - h))/100).toFixed(2);
 };
 
-var table = [];//holds the crash points for previous games
-var tableLength = 2000;//number of games you want to load, if the number is above 10000 it may lag for a couble seconds.
+var table = [];
+var tableLength = 2000;
 var bust100=[];
 var index=[];
 
@@ -279,15 +260,8 @@ function genTable(crash){
 var getEngine = engine.getEngine();
 genTable(getEngine.tableHistory[0].hash);
 console.log(getEngine.tableHistory[0].hash)
-/*
-for(let i=0;i<tableLength;i++)
-{
-	if (getEngine.tableHistory[i]/100>1000) {
-		console.log(getEngine.tableHistory[i]/100);
-	}
-}
-}); */
-//console.log(table);
+
+
 },1000);
              
     
