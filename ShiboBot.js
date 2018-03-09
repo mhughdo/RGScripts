@@ -77,6 +77,7 @@ function genTable(crash){
   }
   engine.chat("Meow Meow: "+nyan[0]+"x"+" ." +index[0]+" games ago"+" "+"https://raigames.io/game/" +(game-index[0]-1))
   engine.chat("Meow Meow: "+nyan[1]+"x"+" ." +index[1]+" games ago"+" "+"https://raigames.io/game/" +(game-index[1]-1))
+engine.chat("Meow Meow: "+nyan[2]+"x"+" ." +index[2]+" games ago"+" "+"https://raigames.io/game/" +(game-index[2]-1))
 }
 
 
@@ -173,7 +174,7 @@ function genTable(crash){
     	j++;
          }
   }
-  engine.chat("Here you are : "+ bust50[0]+"x"+"." +" "+index[0]+" games ago");
+  engine.chat( bust50[0]+"x"+"." +" "+index[0]+" games ago");
 }
 
 
@@ -253,7 +254,7 @@ function genTable(crash){
     	j++;
          }
   }
-   engine.chat("Here you are : "+ bust100[0]+"x"+"." +" "+index[0]+" games ago");
+   engine.chat( bust100[0]+"x"+"." +" "+index[0]+" games ago");
 }
 
 
