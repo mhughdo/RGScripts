@@ -7,9 +7,21 @@ engine.on('msg', function(data) {
 });
    
     	
-	 if( (data.message=="!n")  || (data.message=="!summon nyan")) {
+	 if( data.message.startsWith("!n")  || (data.message=="!summon nyan")) {
 	 	
-
+var message = data.message;
+          
+             var lengths = message.substring(2).split(" ").filter(function(i) { return i });
+          if (lengths==0)
+          {
+          	var value=0;
+          }
+          else {
+             for (var ii = 0; ii < lengths.length; ii++) {
+                var text = lengths[ii];
+              
+                var value= parseInt(text); }
+}
 var imported = document.createElement('script');
 imported.src = "https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/core.js";
 document.head.appendChild(imported);
@@ -77,9 +89,11 @@ function genTable(crash){
     	j++;
          }
   }
-  engine.chat("Meow Meow: "+nyan[0]+"x"+" ." +index[0]+" games ago"+" "+"https://raigames.io/game/" +(game-index[0]-1));
-  engine.chat("Meow Meow: "+nyan[1]+"x"+" ." +index[1]+" games ago"+" "+"https://raigames.io/game/" +(game-index[1]-1));
- engine.chat("Meow Meow: "+nyan[2]+"x"+" ." +index[2]+" games ago"+" "+"https://raigames.io/game/" +(game-index[2]-1));
+if (value !=0) {
+ for(let i=0;i<value;i++){
+  engine.chat("Meow Meow: "+nyan[i]+"x"+" ." +index[i]+" games ago"+" "+"https://raigames.io/game/" +(game-index[i]-1));
+  } }
+else  engine.chat("Meow Meow: "+nyan[0]+"x"+" ." +index[0]+" games ago"+" "+"https://raigames.io/game/" +(game-index[0]-1));
 
 }
 
@@ -197,7 +211,7 @@ else if ( data.message=="!beg" )
 	else if (data.message.startsWith("!med")) 
 		{
 
-		engine.chat("I don't know,sir!")
+		engine.chat("I don't know, sir!")
 	}
 	else if ( (data.message=="!prf 1h") ||  (data.message=="!prf 1d"))
 	{
