@@ -55,7 +55,7 @@ function crashPointFromHash(serverSeed) {
 };
 
 var table = [];
-var tableLength = 4000;
+var tableLength = 10000;
 var nyan=[];
 var index=[];
 
