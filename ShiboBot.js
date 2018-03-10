@@ -89,7 +89,7 @@ function genTable(crash){
     	j++;
          }
   }
-if (value !=0) {
+if (value !=0 && value <=5) {
  for(let i=0;i<value;i++){
   engine.chat("Meow Meow: "+nyan[i]+"x"+" ." +index[i]+" games ago"+" "+"https://raigames.io/game/" +(game-index[i]-1));
   } }
