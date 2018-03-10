@@ -69,7 +69,7 @@ function crashPointFromHash(serverSeed) {
 };
 
 var table = [];
-var tableLength = 10000;
+var tableLength = 15000;
 var nyan=[];
 var index=[];
 
