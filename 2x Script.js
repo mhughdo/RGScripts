@@ -46,7 +46,7 @@ engine.on('game_crash', function(data) {
        	key++;
        	lossStreak=0;
        }
-       if (key!=0  && precr1>2.2) 
+       if (key!=0  && precr1>2 && precr>=2.2 ) 
        {
        	key=0;
 
