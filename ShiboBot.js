@@ -2,7 +2,7 @@
 engine.on('game_crash', function(data) {
 var thing = engine.getEngine();
    var precr=thing.tableHistory[0].game_crash/100;
-if (precr==0)
+if (precr==0||precr==1)
 {
 engine.chat("doh!");
 }
