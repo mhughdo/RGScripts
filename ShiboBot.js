@@ -136,7 +136,10 @@ engine.on("msg", function (data) {
         else if (message.startsWith("!bst") || message.startsWith("!bust")) {
             var operat;
             gap=false;
-            
+            var regex = /[+-]?\d+(\.\d+)?/g;
+
+            //  var str = '<tag value="abc hd <1.25 2 " value1="-12.334" />';
+              var result = data.message.match(regex).map(function(v) { return parseFloat(v); });
             var res = data.message.match(/>/g);
             var wwtk=data.message.match(/x/g);
             var res1= data.message.match(/</g);
@@ -150,7 +153,7 @@ engine.on("msg", function (data) {
         {
          operat="<";
         }
-             let result = data.message.match(/\d+/g).map(n => parseFloat(n));
+           //  let result = data.message.match(/\d+/g).map(n => parseFloat(n));
              if (wwtk!=null)
              {
                 if (result.length==1)
@@ -176,9 +179,11 @@ engine.on("msg", function (data) {
         else if (message.startsWith("!streak")) {
             var operat;
             var regex = /[+-]?\d+(\.\d+)?/g;
-
+           
           //  var str = '<tag value="abc hd <1.25 2 " value1="-12.334" />';
             var result = data.message.match(regex).map(function(v) { return parseFloat(v); });
+           //
+           // console.log(result.length);
         //    console.log(floats);
                    var res = data.message.match(/>/g);
                 var res1= data.message.match(/</g);
@@ -195,10 +200,15 @@ engine.on("msg", function (data) {
                      {
                               streak(0,operat,result[0]);
                      }
-                     else 
+                     else  if (result.length==2)
                      {
                          streak(result[0],operat,result[1]);
                      }
+                     else 
+                     {
+                         customStreak(result[0],operat,result[1],result[2]);
+                     }
+
                    
 
         }
@@ -213,287 +223,13 @@ engine.on("msg", function (data) {
  Request processing.
 ===================================*/
 
-function processByLength(message, action) {
-    /* Get the lengths that come after the command. */
-    var lengths = message.split(" ").filter(function (ii) { return ii; });
-    lengths = lengths.slice(1);
-
-    /* Check input. */
-    if (lengths.length == 0) {
-        /* Default to 100 games. */
-        lengths.push("100");
-    }
-    else if (lengths.length > 3) {
-        say("Please limit to three arguments in one request.");
-        return;
-    }
-    
-    /* Clear duplicates. */
-    lengths = unique(lengths);
-
-    /* Check for invalid arguments. */
-    for (var ii = 0; ii < lengths.length; ii++) {
-        var text = lengths[ii];
-        var length = parseInt(text);
-        
-        if (length > _games.length) {
-            lengths[ii] = length = _games.length.toString();
-        }
-        
-        if (isNaN(length)) { /* Check for NaN. */
-            if (text.indexOf("all") >= 0) {
-                lengths[ii] = length = _games.length.toString();
-            }
-            else {
-                say("Wrong format: " + text);
-                return;
-            }
-        }
-        else if (length < 1) {
-            say("Please target at least 1 game: " + text);
-            return;
-        }
-        else if (text.indexOf("x") > 0) {
-            var parts = text.split("x");
-            if (parts.length < 2) {
-                say("Wrong format: " + text);
-                return;
-            }
-            else {
-                var sets = parseInt(parts[1]);
-                if (isNaN(sets)) {
-                    say("Wrong format: " + text);
-                    return;
-                }
-                else if (sets < 1 || sets > 5) {
-                    say("Please target between 1 and 5 sets: " + text);
-                    return;
-                }
-            }
-        }
-    }
-
-    /* Process request. */
-    var results = [];
-    var response = "";
-
-    for (var ii = 0; ii < lengths.length; ii++) {
-        var text = lengths[ii];
-        response += text + " ";
-        var length = parseInt(text);
-
-        var sets = 1;
-        if (text.indexOf("x") > 0) {
-            sets = parseInt(text.split("x")[1]);
-        }
-
-        var result = "";
-        for (var jj = 0; jj < sets; jj++) {
-            result += action(length * jj, length);
-            result += ", ";
-        }
-        result = result.substring(0, result.length - 2); /* Trim final comma. */
-        results.push(result);
-    }
-
-    /* Print result. */
-    var response =  "";
-    for (var ii = 0; ii < results.length; ii++) {
-        response += " " + results[ii] + "; ";
-    }
-    response = response.substring(0, response.length - 2); /* Trim final semicolon. */
-    say(response);
-}
 
 
-
-function processJoking(message, action) {
-    /* Get the losses that come after the command. */
-    var losses = message.split(" ").filter(function (ii) { return ii; });
-    losses = losses.slice(2);
-
-    /* Check input. */
-    if (losses.length == 0) {
-        /* Default to 5. */
-        losses.push("5");
-    }
-    else if (losses.length > 3) {
-        say("Please limit to three arguments in one request.");
-        return;
-    }
-    
-    /* Clear duplicates. */
-    losses = unique(losses);
-
-    /* Check for invalid arguments. */
-    for (var ii = 0; ii < losses.length; ii++) {
-        var text = losses[ii];
-        var loss = parseFloat(text);
-        
-        if (isNaN(text)) { /* Check for NaN. */
-            say("Wrong format: " + text);
-            return;
-        }
-        else if (loss != Math.floor(loss) || loss < 3 || loss > 9) {
-            say("Please target a loss streak between 3 and 9: " + text);
-            return;
-        }
-    }
-
-    /* Process request. */
-    var results = [];
-    var response = "";
-
-    for (var ii = 0; ii < losses.length; ii++) {
-        var text = losses[ii];
-        response += text + " ";
-        results.push(action(text));
-    }
-
-    /* Print result. */
-    var response =  "";
-    for (var ii = 0; ii < results.length; ii++) {
-        response += " " + results[ii] + "; ";
-    }
-   response = response.substring(0, response.length - 2); /* Trim final semicolon. */
-    say(response);
-}
 
 /*==================================
  Calculations for requests.
 ===================================*/
 
-
-
-
-
-function median(start, length) {
-    try {
-        var local = _games.slice(start, start + length);
-        local.sort(function (a, b) { return a.bust - b.bust; });
-
-        var point = Math.floor(length / 2);
-        if (length % 2) { /* Exact median. */
-            return local[point].bust + "x";
-        }
-        else {
-            var avg = (parseFloat(local[point - 1].bust) + parseFloat(local[point].bust)) / 2.0;
-            return avg.toFixed(2) + "x";
-        }
-    }
-    catch (err) {
-        /* If an input comes in that takes us out of the bounds of the data available, return NaN. */
-        return "NaN";
-    }
-}
-
-function average(start, length) {
-    try {
-        var sum = 0;
-        for (var ii = start; ii < start + length; ii++) {
-            sum += parseFloat(_games[ii].bust);
-        }
-        return (sum / length).toFixed(2) + "x";
-    }
-    catch (err) {
-        /* If an input comes in that takes us out of the bounds of the data available, return NaN. */
-        return "NaN";
-    }
-}
-
-function mode(start, length) {
-    try {
-        var modeMap = {};
-        var maxEl = [_games[0].bust];
-        var maxCount = 1;
-
-        for (var ii = start; ii < start + length; ii++) {
-            var el = _games[ii].bust;
-
-            if (modeMap[el] == null)
-                modeMap[el] = 1;
-            else
-                modeMap[el]++;
-
-            if (modeMap[el] > maxCount) {
-                maxEl = [el];
-                maxCount = modeMap[el];
-            }
-            else if (modeMap[el] == maxCount) {
-                maxEl.push(el);
-            }
-        }
-
-        maxEl.sort(function (a, b) { return a - b; });
-
-        var result = maxEl[0] + "x";
-        for (var ii = 1; ii < maxEl.length; ii++) {
-            result += "|" + maxEl[ii] + "x";
-        }
-        return result + " (" + maxCount + " times)";
-    }
-    catch (err) {
-        /* If an input comes in that takes us out of the bounds of the data available, return NaN. */
-        return "NaN";
-    }
-}
-
-function min(start, length) {
-    try {
-        var found;
-        for (var ii = start; ii < start + length; ii++) {
-            var game = _games[ii];
-            if (found == null) {
-                found = game;
-            }
-            else if (parseFloat(game.bust) < parseFloat(found.bust)) {
-                found = game;
-            }
-        }
-        return found.bust + "x (game " + found.id + ")";
-    }
-    catch (err) {
-        /* If an input comes in that takes us out of the bounds of the data available, return NaN. */
-        return "NaN";
-    }
-}
-
-function max(start, length) {
-    try {
-        var found;
-        for (var ii = start; ii < start + length; ii++) {
-            var game = _games[ii];
-            if (found == null) {
-                found = game;
-            }
-            else if (parseFloat(game.bust) > parseFloat(found.bust)) {
-                found = game;
-            }
-        }
-        return found.bust + "x (game " + found.id + ")";
-    }
-    catch (err) {
-        /* If an input comes in that takes us out of the bounds of the data available, return NaN. */
-        return "NaN";
-    }
-}
-
-function probability(cashout, below) {
-    var p = prob(parseFloat(cashout));
-
-    /* Check for inversion. */
-    if (below) {
-        p = 100 - p;
-    }
-
-    /* Check for streak. */
-    if (cashout.indexOf("x") > 0) {
-        var streak = parseInt(cashout.split("x")[1]);
-        p = Math.pow(p / 100.0, streak) * 100.0;
-    }
-
-    return "~" + round(p, 3) + "%";
-}
 
 function nyan(num)
                 {
@@ -541,8 +277,8 @@ function nyan(num)
 
                 {
                     
-                    max_sequence=parseFloat(max_sequence);
-                    console.log(max_sequence+" "+ operat+" "+ " "+ num);
+                   
+                   // console.log(max_sequence+" "+ operat+" "+ " "+ num);
                     var  results=[];
                     var j=0; 
                     var count;
@@ -691,6 +427,86 @@ function nyan(num)
 
                             else {say("Seen : " + max_sequence1 +" games   , " + m  +" games ago: " + " "+ responseText); }
                 }
+                function customStreak(max_sequence,operat,num,len)
+                {
+                              
+
+
+console.log(max_sequence+ " " + num+" " +len);
+	var sequence_count=0;
+	var start=0;
+	var index=[];
+    var x=0;
+   for (let i=0;i<100000;i++)
+   {
+       index[i]=0;
+   }
+    var responeText="";
+
+		for (var m=0;m<len;m++)
+		{
+                                for(var  i = 0+start; i<_games.length;i++) {
+                          
+                            
+                                    if (_games[i].bust < num ) {
+                                      
+                                         sequence_count++; 
+                                        
+                                          if (sequence_count ==max_sequence) {
+                                              console.log(start);
+                                            start=i;
+                                          
+                                          if (start>index[x] )
+                                          	{
+                                          		index[x]=start;
+                                          x++;
+											  }
+                                          
+                                           max_sequence = sequence_count;
+                                        break;
+                                          
+                                          
+                                           
+                                          }
+                                        }
+                                     else {
+                                        sequence_count = 0;
+                                       
+                                             } 
+                                     
+                                            }
+                                            }
+                        
+	
+	
+	 for (var k=0;k<x;k++)
+	 {
+        
+     responeText+= "Seen  < "+ num +": " + (index[k]+1 ) +" games ago : " +"(" ; 
+       for (var g=index[k];g>(index[k]-max_sequence);g--)
+       {
+           if (g==(index[k]-max_sequence-1))
+           {
+            responeText+=_games[g].bust+" ";
+           }
+           else 
+           {
+                 responeText+=_games[g].bust+", ";
+           }
+       }
+       if (k==(x-1))
+       {
+        responeText+=") ";
+       }
+       else 
+       {responeText+=") "+" ;"; }
+          
+     }
+     say(responeText);
+	 
+	
+
+                }
             function bust(num,operat,target,gap)
             {
                 var results=[];
@@ -755,8 +571,25 @@ function nyan(num)
            {
                   if (num==1)
                   {
+                      if (target==0)
+                      {
+
                     responseText+= (resultsid[0]+1) + " games ago "+"#"+  results[0] +"x" ;
-                    say("Seen " + responseText);
+                    say("Seen " + target+ ": " + responseText);
+                      }
+                      else 
+                      {
+                        responseText+= (resultsid[0]+1) + " games ago "+"#"+  results[0] +"x" ;
+                        if (operat==">")
+                        {
+                            say("Seen > " +target +": "   + responseText);
+                        }
+                        else 
+                        {
+                            say("Seen < " +target +": "   + responseText);
+                        }
+                       
+                      }
                 }
                   else 
                   {
@@ -773,6 +606,12 @@ function nyan(num)
                   
                   
                 }
+                if (target==0)
+                      {
+                        say("Seen " + target+ ": " + responseText); 
+                      }
+               else 
+               {
                 if (operat==">")
                 {
                     say("Seen > " +target +": "   + responseText);
@@ -781,6 +620,16 @@ function nyan(num)
                 {
                     say("Seen < " +target +": "   + responseText);
                 }
+                
+               }
+            /*    if (operat==">")
+                {
+                    say("Seen > " +target +": "   + responseText);
+                }
+                else 
+                {
+                    say("Seen < " +target +": "   + responseText);
+                } */ 
                 
             }
         }
@@ -810,76 +659,6 @@ say(responseText);
 
 
 
-function jokingProbability125(losses) {
-    var p108 = (100 - prob(1.08)) / 100.0;
-    var p125 = (100 - prob(1.25)) / 100.0;
-    var p = p108 * Math.pow(p125, losses - 1);
-    return "bust~" + round(p * 100.0, 5) + "%";
-}
-
-function jokingProbability4(losses) {
-    var p108 = (100 - prob(1.08)) / 100.0;
-    var p125 = (100 - prob(1.25)) / 100.0;
-    var p131 = (100 - prob(1.31)) / 100.0;
-    var p = p108 * p125 * p131;
-    if (losses > 3) {
-        var p133 = (100 - prob(1.33)) / 100.0;
-        p *= Math.pow(p133, losses - 3);
-    }
-    return "bust~" + round(p * 100.0, 5) + "%";
-}
-
-var _streak125 = [1.08, 1.25, 1.25, 1.25, 1.25, 1.25, 1.25, 1.25, 1.25];
-var _streak4 = [1.08, 1.25, 1.31, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33];
-
-function jokingBust125(losses) {
-    return jokingBust(_streak125.slice(0, losses));
-}
-
-function jokingBust4(losses) {
-    return jokingBust(_streak4.slice(0, losses));
-}
-
-function jokingBust(streak) {
-    streak.reverse(); /* The order in which we'll come across the games. */
-    
-    var found = [];
-    for (var ii = 0; ii < _games.length; ii++) {
-        var game = _games[ii];
-        if (game.bust < streak[found.length]) {
-            found.push(game);
-            if (found.length >= streak.length) {
-                break;
-            }
-        }
-        else {
-            /* Back it up and start again. */
-            ii = ii - found.length;
-            found = [];
-        }
-    }
-
-    /* Report back. */
-    if (found.length >= streak.length) {
-        /* Start from the first game. */
-        found.reverse();
-
-        /* List all the games. */
-        var result = "";
-        for (var ii = 0; ii < found.length; ii++) {
-            if (result) {
-                result += ", ";
-            }
-            result += found[ii].bust + "x";
-        }
-        
-        result = "seen " + (_game.id - found[found.length - 1].id) + " games ago (" + result + ")";
-        return result;
-    }
-    else {
-        return "never seen";
-    }
-}
 
 /*==================================
  Games management.
@@ -1073,22 +852,14 @@ function round(value, decimals) {
     return Number(Math.round(value + "e" + decimals) + "e-" + decimals);
 }
 
-function unique(args) {
-    var seen = {};
-    return args.filter(function(item) {
-        return seen.hasOwnProperty(item) ? false : (seen[item] = true);
-    })
-}
+
 
 function utcDate() {
     var utc = new Date();
     return new Date().setMinutes(utc.getMinutes() + utc.getTimezoneOffset());
 }
 
-function prob(cashout) {
-    /* Based on winProb here: https://raigames.io/scripts/game-logic/clib.js. */
-    return 99 / (1.01 * (parseFloat(cashout) - 0.01));
-}
+
 
 function say(message) {
     /* There's a limit of 499 characters per chat message.  This shouldn't be a problem too often, but, if someone does something like "!streak 1" or
@@ -1102,15 +873,4 @@ function say(message) {
     else {
         engine.chat(message);
     }
-}
-
-/*==================================
- Functions for IE.
-===================================*/
-
-if (!String.prototype.startsWith) {
-    String.prototype.startsWith = function (searchString, position) {
-        position = position || 0;
-        return this.indexOf(searchString, position) === position;
-    };
 }
