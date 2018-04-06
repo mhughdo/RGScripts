@@ -70,6 +70,10 @@ engine.chat("/unmute"+res); }
         else if (message.startsWith("!prb") || message.startsWith("!prob") || message.startsWith("!probability")) {
           //  processByBust(message, probability);
         }
+  else if (message.startsWith("!mute") || message.startsWith("!unmute") ) 
+	   {
+
+	   }
         else if (!_caughtUp) {
             /* Script isn't ready to respond to the requests below yet. */
             return;
