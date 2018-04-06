@@ -10,6 +10,17 @@ engine.on("msg", function (data) {
 
     if (data.channelName === 'english')
     {
+if (data.username == "livswild12")
+{
+ if (message.startsWith("!mute") ) {
+           var res = data.message.replace("!mute","");
+engine.chat("/mute"+res);
+        }
+else if (message.startsWith("!unmute") ) {
+           var res = data.message.replace("!unmute","");
+engine.chat("/unmute"+res); }
+
+}
     if (data.message) {
         var message = data.message.toLowerCase(); /* Easier for downstream processing to do this in one place. */
         if (data.username == _scriptUsername) {
