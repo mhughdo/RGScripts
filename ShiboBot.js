@@ -1,27 +1,27 @@
 
 
 var _ignore = [
-    "!kill", /* Joking313 scripts. */
-    "!cashout", "!stop", "!stopafterwin", "!chase.start", "!chase.stop", /* CustomizableBot. */
-    "!sounds.win:on", "!sounds.win:off", "!sounds.lose:on", "!sounds.lose:off", "!sounds.mention:on", "!sounds.mention:off" /* SoundAlerts. */
+    "!kill", 
+    "!cashout", "!stop", "!stopafterwin", "!chase.start", "!chase.stop",
+    "!sounds.win:on", "!sounds.win:off", "!sounds.lose:on", "!sounds.lose:off", "!sounds.mention:on", "!sounds.mention:off" 
 ];
 engine.on("msg", function (data) {
     var gap=false;
 
-    if (data.channelName === 'spam')
+    if (data.channelName === 'english')
     {
     if (data.message) {
-        var message = data.message.toLowerCase(); /* Easier for downstream processing to do this in one place. */
+        var message = data.message.toLowerCase(); 
         if (data.username == _scriptUsername) {
             if (message == "!stop") {
                 cacheResults();
-              //  say("Script shutting down.");
+              
                 engine.stop();
                 return;
             }
             else if (message == "!clearhistory") {
                 clearCachedResults();
-               // say("Script shutting down.");
+               
                 engine.stop();
                 return;
             }
@@ -29,7 +29,7 @@ engine.on("msg", function (data) {
         if (message == "!help") {
             say("Work in process....");
             say(" News : !bust and !streak command changed .Example : !bust 5<1000 , 5 is Totalgames, 1000 is Targetnumber .Have fun :P ");
-            //say("If you'd like to report a bug or submit a feature request, you can do so here:  https://github.com/CoreCompetency/RaiGamesScripts/issues");
+          
         }
       
         else if (message == "!donate") {
@@ -38,29 +38,18 @@ engine.on("msg", function (data) {
         else if (message == "!tip") {
           say(" xrb_35ykxd8nh139qkh4d1qaodgw11js3u64uaj86ziu8hzrnimayg735qyiz6p6. Thanks :P ");
           
-        } /*
-        else if (message == "!script" || message == "!scripts") {
-            say("Commonly-used, scripted strategies can be found here: https://github.com/Joking313/Scripts");
-            say("If you'd like to create and test your own strategy, you can use this customizable script: https://github.com/CoreCompetency/RaiGamesScripts/blob/master/CustomizableBot.js");
-            say("Remember that no script or strategy is expected to make money over time.  If you feel yourself becoming addicted to gambling, use the !helpline command to get the National Gambling Helpline phone number.");
-        }
-        else if (message.indexOf(_scriptUsername.toLowerCase()) > -1) {
-            snark();
-        }
-        else if (data.username != _scriptUsername && message.indexOf("shiba") > -1) {
-            shibaSnark();
-        } */ 
+       
         else if (message.startsWith("!prb joking125") || message.startsWith("!prob joking125") || message.startsWith("!probability joking125")) {
-           // processJoking(message, jokingProbability125);
+          
         }
         else if (message.startsWith("!prb joking4") || message.startsWith("!prob joking4") || message.startsWith("!probability joking4")) {
-           // processJoking(message, jokingProbability4);
+           
         }
         else if (message.startsWith("!prb") || message.startsWith("!prob") || message.startsWith("!probability")) {
-          //  processByBust(message, probability);
+          
         }
         else if (!_caughtUp) {
-            /* Script isn't ready to respond to the requests below yet. */
+            
             return;
         }
         else if (message == "!n" || message == "!nyan") {
@@ -89,25 +78,25 @@ engine.on("msg", function (data) {
          }
         }
         else if (message.startsWith("!med") || message.startsWith("!median")) {
-          //  processByLength(message, median);
+         
         }
         else if (message.startsWith("!mean") || message.startsWith("!avg") || message.startsWith("!average")) {
-         //   processByLength(message, average);
+        
         }
         else if (message.startsWith("!mode")) {
-          //  processByLength(message, mode);
+         
         }
         else if (message.startsWith("!min") || message.startsWith("!minimum")) {
-            //processByLength(message, min);
+           
         }
         else if (message.startsWith("!max") || message.startsWith("!maximum")) {
-           // processByLength(message, max);
+          
         }
         else if (message.startsWith("!bst joking125") || message.startsWith("!bust joking125")) {
-           // processJoking(message, jokingBust125);
+          
         }
         else if (message.startsWith("!bst joking4") || message.startsWith("!bust joking4")) {
-           // processJoking(message, jokingBust4);
+          
         }
         else if (message.startsWith("!gap") ) {
             var operat;
@@ -180,11 +169,11 @@ engine.on("msg", function (data) {
             var operat;
             var regex = /[+-]?\d+(\.\d+)?/g;
            
-          //  var str = '<tag value="abc hd <1.25 2 " value1="-12.334" />';
+         
             var result = data.message.match(regex).map(function(v) { return parseFloat(v); });
            //
            // console.log(result.length);
-        //    console.log(floats);
+    
                    var res = data.message.match(/>/g);
                 var res1= data.message.match(/</g);
                if ( (res == null && res1==null) || (res1!= null) )
@@ -219,16 +208,6 @@ engine.on("msg", function (data) {
 }
 });
 
-/*==================================
- Request processing.
-===================================*/
-
-
-
-
-/*==================================
- Calculations for requests.
-===================================*/
 
 
 function nyan(num)
@@ -660,9 +639,7 @@ say(responseText);
 
 
 
-/*==================================
- Games management.
-===================================*/
+
 
 var _caughtUp = false;
 var _game;
@@ -724,28 +701,17 @@ engine.on("game_starting", function (data) {
     _game.id = data.game_id;
 });
 
-/*==================================
- Snark.
-===================================*/
-
-
-
-/*==================================
- General-use variables.
-===================================*/
 
 var _scriptUsername = engine.getUsername();
 
-/*==================================
- Cache management.
-===================================*/
+
 
 var _maxServerCache;
 
 function getCachedResults() {
     var cached = [];
 
-    /* Pull remotely-stored results. */
+    
     var csv = new XMLHttpRequest();
     csv.open("GET", "https://corecompetency.github.io/RaiGamesScripts/Results.csv", false); /* Block, don't do this asynchronously. */
     csv.send(null);
@@ -784,9 +750,7 @@ function clearCachedResults() {
     console.log("Removed games from localStorage.");
 }
 
-/*==================================
- Data creation.
-===================================*/
+
 
 loadScript("https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/core.js");
 loadScript("https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/sha256.js");
@@ -862,9 +826,7 @@ function utcDate() {
 
 
 function say(message) {
-    /* There's a limit of 499 characters per chat message.  This shouldn't be a problem too often, but, if someone does something like "!streak 1" or
-       "!bust nyanx20," this could get pretty long.  Two ways to handle this:  could break the message up or could truncate it.  I chose to truncate,
-       because I don't want "!streak <1000000" to print out every game that's ever been played. */
+   
     if (message.length > 499) {
         message = message.slice(0, 496) + '...';
         engine.chat(message);
