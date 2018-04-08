@@ -121,7 +121,7 @@ engine.chat("/unmute"+res); }
         else if (message.startsWith("!bst joking125") || message.startsWith("!bust joking125")) {
            // processJoking(message, jokingBust125);
         }
-        else if (message.startsWith("!bst joking4") || message.startsWith("!bust joking4")) {
+        else if (message.startsWith("!bst joking4") || message.startsWith("!bust joking4")||message.startsWith("!gap joking") {
            // processJoking(message, jokingBust4);
         }
         else if (message.startsWith("!gap") ) {
