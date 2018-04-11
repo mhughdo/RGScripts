@@ -8,19 +8,8 @@ var _ignore = [
 engine.on("msg", function (data) {
     var gap=false;
 
-    if (data.channelName === 'english')
+    if (data.channelName === 'serbian')
     {
-if (data.username == "livswild12")
-{
- if (data.message.startsWith("!mute") ) {
-           var res = data.message.replace("!mute","");
-engine.chat("/mute"+res);
-        }
-else if (data.message.startsWith("!unmute") ) {
-           var res = data.message.replace("!unmute","");
-engine.chat("/unmute"+res); }
-
-}
     if (data.message) {
         var message = data.message.toLowerCase(); /* Easier for downstream processing to do this in one place. */
         if (data.username == _scriptUsername) {
@@ -70,10 +59,6 @@ engine.chat("/unmute"+res); }
         else if (message.startsWith("!prb") || message.startsWith("!prob") || message.startsWith("!probability")) {
           //  processByBust(message, probability);
         }
-  else if (message.startsWith("!mute") || message.startsWith("!unmute") ) 
-	   {
-
-	   }
         else if (!_caughtUp) {
             /* Script isn't ready to respond to the requests below yet. */
             return;
@@ -90,7 +75,21 @@ engine.chat("/unmute"+res); }
              nyan(1);
          }
         }
-        
+        else if (message.startsWith("!pattern ")) {
+            var regex = /[+-]?\d+(\.\d+)?/g;
+           var result = data.message.match(regex).map(function(v) { return parseFloat(v); });
+           var inputs=[];
+           var j=0;
+           var thing = engine.getEngine();
+
+           for (let i=0;i<result[0];i++)
+           {
+                        inputs[j]=thing.tableHistory[i].game_crash/100;
+                        j++;
+           }
+          pattern(inputs,result[1]);
+
+        }
         else if (message.startsWith("!n") || message.startsWith("!nyan")) {
             if (data.message.length>2)
             {
@@ -121,7 +120,7 @@ engine.chat("/unmute"+res); }
         else if (message.startsWith("!bst joking125") || message.startsWith("!bust joking125")) {
            // processJoking(message, jokingBust125);
         }
-        else if (message.startsWith("!bst joking4") || message.startsWith("!bust joking4")||message.startsWith("!gap joking")) {
+        else if (message.startsWith("!bst joking4") || message.startsWith("!bust joking4")) {
            // processJoking(message, jokingBust4);
         }
         else if (message.startsWith("!gap") ) {
@@ -148,7 +147,7 @@ engine.chat("/unmute"+res); }
                  bust(result[0],operat,result[1],gap);
               }
         }
-        else if (message.startsWith("!bst") || message.startsWith("!bust") || message.startsWith("!0") ) {
+        else if (message.startsWith("!bst") || message.startsWith("!bust")) {
             var operat;
             gap=false;
             var regex = /[+-]?\d+(\.\d+)?/g;
@@ -245,7 +244,53 @@ engine.chat("/unmute"+res); }
  Calculations for requests.
 ===================================*/
 
+function pattern(inputs,delta)
+{
+   var x=inputs.length;
+   console.log(x+" "+delta);
+   //var jk4=[1.08,1.25,1.31,1.33,1.33,1.33,1.33,1.33,1.33];
+var j=0;
+//var streak=[1,2,3,4,1.07,1.24,2,3,4,5,6,1.30,1.32,1.32,2,1.07,1.24,1.3,1.32,1.32,1.32,4,5,6,7,8,1.07,1.24,1.30,1.32,1.32,6,7,8,9];
+//var len=5;
+var check=0;
+var index=[]; var k=0;
+//console.log(streak.length)
+for (let i=0;i<_games.length;i++)
+{
+ 
+   
+        if (Math.abs(_games[i].bust-inputs[j] )<=delta) 
+         {
+         
+         //  console.log(jk4[j]);
+         //  console.log(j);
+           j++;
+       //  console.log(streak[i]);
+         /// console.log(i);
+            
+                check++;
+               // break;
+                
+         }
+         else 
+         {check=0; j=0;}
+        
+     
+     if (check==x)
+     {
+        index[k]=i;
+        k++;
+         j=0;
+         
+     } 
 
+}
+for ( let i=index[1];i>(index[1]-x-2);i--)
+{
+     console.log(_games[i].bust) ;
+
+}
+}
 function nyan(num)
                 {
                     var results=[];
