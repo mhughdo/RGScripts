@@ -56,7 +56,7 @@ engine.on("msg", function (data) {
         else if (message.startsWith("!prb joking4") || message.startsWith("!prob joking4") || message.startsWith("!probability joking4")) {
            // processJoking(message, jokingProbability4);
         }
-        else if (message.startsWith("!prb") || message.startsWith("!prob") || message.startsWith("!probability")) {
+        else if (message.startsWith("!prb") || message.startsWith("!prob") || message.startsWith("!probability")|| message.startsWith("!pattern")) {
           //  processByBust(message, probability);
         }
         else if (!_caughtUp) {
