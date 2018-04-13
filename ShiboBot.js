@@ -3,7 +3,8 @@
 var _ignore = [
     "!kill", /* Joking313 scripts. */
     "!cashout", "!stop", "!stopafterwin", "!chase.start", "!chase.stop", /* CustomizableBot. */
-    "!sounds.win:on", "!sounds.win:off", "!sounds.lose:on", "!sounds.lose:off", "!sounds.mention:on", "!sounds.mention:off" /* SoundAlerts. */
+    "!sounds.win:on", "!sounds.win:off", "!sounds.lose:on", "!sounds.lose:off", "!sounds.mention:on", "!sounds.mention:off"
+     /* SoundAlerts. */
 ];
 engine.on("msg", function (data) {
     var gap=false;
@@ -22,25 +23,25 @@ engine.chat("/unmute"+res); }
 
 }
     if (data.message) {
-        var message = data.message.toLowerCase(); /* Easier for downstream processing to do this in one place. */
+        var message = data.message.toLowerCase();
         if (data.username == _scriptUsername) {
             if (message == "!stop") {
                 cacheResults();
-              //  say("Script shutting down.");
+              
                 engine.stop();
                 return;
             }
             else if (message == "!clearhistory") {
                 clearCachedResults();
-               // say("Script shutting down.");
+               
                 engine.stop();
                 return;
             }
         }
         if (message == "!help") {
             say("Work in process....");
-            say(" News : !bust and !streak command changed .Example : !bust 5<1000 , 5 is Totalgames, 1000 is Targetnumber .Have fun :P ");
-            //say("If you'd like to report a bug or submit a feature request, you can do so here:  https://github.com/CoreCompetency/RaiGamesScripts/issues");
+            //say(" News : !bust and !streak command changed .Example : !bust 5<1000 , 5 is Totalgames, 1000 is Targetnumber .Have fun :P ");
+         
         }
       
         else if (message == "!donate") {
@@ -49,26 +50,15 @@ engine.chat("/unmute"+res); }
         else if (message == "!tip") {
           say(" xrb_35ykxd8nh139qkh4d1qaodgw11js3u64uaj86ziu8hzrnimayg735qyiz6p6. Thanks :P ");
           
-        } /*
-        else if (message == "!script" || message == "!scripts") {
-            say("Commonly-used, scripted strategies can be found here: https://github.com/Joking313/Scripts");
-            say("If you'd like to create and test your own strategy, you can use this customizable script: https://github.com/CoreCompetency/RaiGamesScripts/blob/master/CustomizableBot.js");
-            say("Remember that no script or strategy is expected to make money over time.  If you feel yourself becoming addicted to gambling, use the !helpline command to get the National Gambling Helpline phone number.");
-        }
-        else if (message.indexOf(_scriptUsername.toLowerCase()) > -1) {
-            snark();
-        }
-        else if (data.username != _scriptUsername && message.indexOf("shiba") > -1) {
-            shibaSnark();
-        } */ 
+        } 
         else if (message.startsWith("!prb joking125") || message.startsWith("!prob joking125") || message.startsWith("!probability joking125")) {
-           // processJoking(message, jokingProbability125);
+         
         }
         else if (message.startsWith("!prb joking4") || message.startsWith("!prob joking4") || message.startsWith("!probability joking4")) {
-           // processJoking(message, jokingProbability4);
+       
         }
         else if (message.startsWith("!prb") || message.startsWith("!prob") || message.startsWith("!probability")) {
-          //  processByBust(message, probability);
+          
         }
   else if (message.startsWith("!mute") || message.startsWith("!unmute")  || message.startsWith("!pattern")) 
 	   {
@@ -103,6 +93,38 @@ engine.chat("/unmute"+res); }
              nyan(1);
          }
         }
+        else if (message.startsWith("!count ")|| message.startsWith("!c ") ) {
+            var operat;
+           
+            var regex = /[+-]?\d+(\.\d+)?/g;
+              var result = data.message.match(regex).map(function(v) { return parseFloat(v); });
+            var res = data.message.match(/>/g);
+            var res1= data.message.match(/</g);
+          
+        
+        if ( (res == null && res1==null) || (res!= null) )
+        {
+            operat=">";
+        }
+        else 
+        {
+         operat="<";
+        }
+           //  let result = data.message.match(/\d+/g).map(n => parseFloat(n));
+
+            
+              if (result.length==1)
+              {
+                      count(operat,result[0],1000);
+              }
+              else 
+              {
+                    count(operat,result[0],result[1]);
+              }
+            
+        }
+
+        
  else if (message.startsWith("!streak")) {
             var operat;
             var regex = /[+-]?\d+(\.\d+)?/g;
@@ -247,7 +269,86 @@ engine.chat("/unmute"+res); }
  Calculations for requests.
 ===================================*/
 
+function count(operat , target,len)
+{
+    var results=[];
+    var resultsid=[];
+    var j=0;
+    var responseText="";
+    var cout=0;
+    if (target==0)
+    {
+        for(let i=0;i<len;i++)
+      {
+              if (_games[i].bust==target)
+              {
+                   cout++;
+                  results[j]=_games[i].bust;
+                  resultsid[j]=_games[0].id-_games[i].id;
+                  j++;
+              }
+             
+      }
+    }
+    else 
+    {
+    if (operat==">" )
+    {
+        
+      for(let i=0;i<len;i++)
+      {
+              if (_games[i].bust>target)
+              {
+                  cout++;
+                  results[j]=_games[i].bust;
+                  resultsid[j]=_games[0].id-_games[i].id;
+                  j++;
+              }
+              
+      }
 
+    }
+   else if (operat=="<")
+   {
+    for(let i=0;i<len;i++)
+    {
+            if (_games[i].bust<target)
+            {
+                cout++;
+                results[j]=_games[i].bust;
+                resultsid[j]=_games[0].id-_games[i].id;
+                j++;
+            }
+            
+    }
+
+   }
+}
+
+var _results=[],_j=0;
+_results[_j]=results[0]; 
+_j++;
+var avggap=0;
+for (let i=0;i<results.length-1;i++)
+{
+_results[_j]=parseInt(Math.abs(resultsid[i]-resultsid[i+1]));
+_j++;
+}
+console.log(j);
+console.log(_j);
+for (let i=1;i<_j;i++)
+{
+
+avggap+= _results[i];
+}
+avggap=avggap/_j;
+console.log(avggap);
+avggap=avggap.toFixed(2);
+console.log(avggap);
+responseText+="Number of games " + operat + target +" in " + len +" games : "+ cout  +", Avg gap : " + avggap +" games " ;
+say(responseText);
+
+}
 function nyan(num)
                 {
                     var results=[];
@@ -662,7 +763,7 @@ for (let i=0;i<results.length-1;i++)
  console.log(_results[_j]+" ");
  _j++;
 }
-responseText+="The last " + _results[0] + "x : " + (resultsid[0]+1) +" games ago. " + "Then  " ;
+responseText+="The last " + _results[0] + "x : " + (resultsid[0]+1) +" games ago. " + ",  " ;
 for (let i=1;i<_j;i++)
 {
  
@@ -879,13 +980,11 @@ function utcDate() {
 
 
 function say(message) {
-    /* There's a limit of 499 characters per chat message.  This shouldn't be a problem too often, but, if someone does something like "!streak 1" or
-       "!bust nyanx20," this could get pretty long.  Two ways to handle this:  could break the message up or could truncate it.  I chose to truncate,
-       because I don't want "!streak <1000000" to print out every game that's ever been played. */
+    
     if (message.length > 499) {
         message = message.slice(0, 496) + '...';
         engine.chat(message);
-        //engine.chat("Aaaaaa too long.");
+     
     }
     else {
         engine.chat(message);
