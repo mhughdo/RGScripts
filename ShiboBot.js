@@ -345,7 +345,14 @@ avggap=avggap/_j;
 console.log(avggap);
 avggap=avggap.toFixed(2);
 console.log(avggap);
-responseText+="Number of games " + operat + target +" in " + len +" games : "+ cout  +", Avg gap : " + avggap +" games " ;
+if ( target==0)
+{
+responseText+="Number of games = " + target +" in " + len +" games : "+ cout  +", Avg gap : " + avggap +" games " ;
+}
+else 
+{
+    responseText+="Number of games " + operat + target +" in " + len +" games : "+ cout  +", Avg gap : " + avggap +" games " ;
+}
 say(responseText);
 
 }
