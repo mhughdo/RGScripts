@@ -135,6 +135,7 @@ engine.chat("/unmute"+res); }
                      {
                          customStreak(result[0],operat,result[1],result[2]);
                      }
+                    }
 
         else if (message.startsWith("!med") || message.startsWith("!median")) {
           //  processByLength(message, median);
@@ -232,7 +233,7 @@ engine.chat("/unmute"+res); }
             say("Weird .Use !help to view all the commands ");
         }
     }
-}
+
 });
 
 /*==================================
