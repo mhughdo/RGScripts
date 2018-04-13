@@ -148,7 +148,7 @@ engine.chat("/unmute"+res); }
                  bust(result[0],operat,result[1],gap);
               }
         }
-        else if (message.startsWith("!bst") || message.startsWith("!bust") || message.startsWith("!0") ) {
+        else if ((message.startsWith("!")&& message.length>1) ||message.startsWith("!bst") || message.startsWith("!bust") || message.startsWith("!0") ) {
             var operat;
             gap=false;
             var regex = /[+-]?\d+(\.\d+)?/g;
