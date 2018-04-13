@@ -103,6 +103,39 @@ engine.chat("/unmute"+res); }
              nyan(1);
          }
         }
+ else if (message.startsWith("!streak")) {
+            var operat;
+            var regex = /[+-]?\d+(\.\d+)?/g;
+           
+          //  var str = '<tag value="abc hd <1.25 2 " value1="-12.334" />';
+            var result = data.message.match(regex).map(function(v) { return parseFloat(v); });
+           //
+           // console.log(result.length);
+        //    console.log(floats);
+                   var res = data.message.match(/>/g);
+                var res1= data.message.match(/</g);
+               if ( (res == null && res1==null) || (res1!= null) )
+               {
+                   operat="<";
+               }
+               else 
+               {
+                operat=">";
+               }
+                   // let result = data.message.match(/\d+/g).map(n => parseFloat(n));
+                     if (result.length==1)
+                     {
+                              streak(0,operat,result[0]);
+                     }
+                     else  if (result.length==2)
+                     {
+                         streak(result[0],operat,result[1]);
+                     }
+                     else 
+                     {
+                         customStreak(result[0],operat,result[1],result[2]);
+                     }
+
         else if (message.startsWith("!med") || message.startsWith("!median")) {
           //  processByLength(message, median);
         }
@@ -191,39 +224,7 @@ engine.chat("/unmute"+res); }
               }
             }
         }
-        else if (message.startsWith("!streak")) {
-            var operat;
-            var regex = /[+-]?\d+(\.\d+)?/g;
-           
-          //  var str = '<tag value="abc hd <1.25 2 " value1="-12.334" />';
-            var result = data.message.match(regex).map(function(v) { return parseFloat(v); });
-           //
-           // console.log(result.length);
-        //    console.log(floats);
-                   var res = data.message.match(/>/g);
-                var res1= data.message.match(/</g);
-               if ( (res == null && res1==null) || (res1!= null) )
-               {
-                   operat="<";
-               }
-               else 
-               {
-                operat=">";
-               }
-                   // let result = data.message.match(/\d+/g).map(n => parseFloat(n));
-                     if (result.length==1)
-                     {
-                              streak(0,operat,result[0]);
-                     }
-                     else  if (result.length==2)
-                     {
-                         streak(result[0],operat,result[1]);
-                     }
-                     else 
-                     {
-                         customStreak(result[0],operat,result[1],result[2]);
-                     }
-
+       
                    
 
         }
