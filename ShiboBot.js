@@ -329,16 +329,20 @@ var _results=[],_j=0;
 _results[_j]=results[0]; 
 _j++;
 var avggap=0;
+var maxgap=0;
+
 for (let i=0;i<results.length-1;i++)
 {
 _results[_j]=parseInt(Math.abs(resultsid[i]-resultsid[i+1]));
 _j++;
 }
-console.log(j);
-console.log(_j);
+
 for (let i=1;i<_j;i++)
 {
-
+if ( _results[i]>maxgap)
+{
+    maxgap=_results[i];
+}
 avggap+= _results[i];
 }
 avggap=avggap/_j;
@@ -347,11 +351,11 @@ avggap=avggap.toFixed(2);
 console.log(avggap);
 if ( target==0)
 {
-responseText+="Number of games = " + target +" in " + len +" games : "+ cout  +", Avg gap : " + avggap +" games " ;
+responseText+="Number of games = " + target +" in " + len +" games : "+ cout  +". Longest gap : " + maxgap +  ", Avg gap : " + avggap +" games " ;
 }
 else 
 {
-    responseText+="Number of games " + operat + target +" in " + len +" games : "+ cout  +", Avg gap : " + avggap +" games " ;
+    responseText+="Number of games " + operat + target +" in " + len +" games : "+ cout  +". Longest gap : " + maxgap + ", Avg gap : " + avggap +" games " ;
 }
 say(responseText);
 
