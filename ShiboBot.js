@@ -355,7 +355,7 @@ responseText+="Number of games = " + target +" in " + len +" games : "+ cout  +"
 }
 else 
 {
-    responseText+="Number of games " + operat + target +" in " + len +" games : "+ cout  +". Longest gap : " + maxgap + ", Avg gap : " + avggap +" games " ;
+    responseText+="Number of games " + operat + target +" in " + len +" games : "+ cout  +". Longest gap : " + maxgap +". Current : " +resultsid[0] +  " games ago  "+ "(" +results[0]+"x )"  +" , Avg gap : " + avggap +" games "  ;
 }
 say(responseText);
 
