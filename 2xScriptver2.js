@@ -29,10 +29,56 @@ engine.on('game_crash', function(data) {
     currentBet=1;
    currentCashout=1;
          }  
-	else if (key ==1 ||  key ==2 || key ==3)
+	else if (key ==1 && _key==0)
   {
+    //lossStreak++;
 _key++;
-currentBet*=2;
+currentBet=4;
+currentCashout=2.2;
+
+
+  }
+  else if (key ==1 && _key==1)
+  {
+    //lossStreak++;
+_key++;
+currentBet=8;
+currentCashout=2.2;
+
+
+  }
+  else if (key ==2 && _key==0)
+  {
+    //lossStreak++;
+_key++;
+currentBet=32;
+currentCashout=2.2;
+
+
+  }
+  else if (key ==2 && _key==1)
+  {
+    //lossStreak++;
+_key++;
+currentBet=64;
+currentCashout=2.2;
+
+
+  }
+  else if (key ==3&& _key==0)
+  {
+    //lossStreak++;
+_key++;
+currentBet=256;
+currentCashout=2.2;
+
+
+  }
+  else if (key ==3 && _key==1)
+  {
+    //lossStreak++;
+_key++;
+currentBet=512;
 currentCashout=2.2;
 
 
@@ -53,17 +99,21 @@ currentCashout=2.2;
     var precr1=thing.tableHistory[1].game_crash/100;
    if (precr >2 )
    {
-     if (lossStreak!=0)
+     if ( (lossStreak!=0 && key==0 ) || (lossStreak!=0 && key==1&&_key==2)   || (lossStreak!=0 && key==2&&_key==2)) 
        {
         key++;
         lossStreak=0;
        }
-       if (key!=0  && precr1>2 && precr>=2.2 ) 
+       if ( (key!=0  && precr1>2 && precr>=2.2 ) || (key!=0&& precr>=2.2 && currentBet!=1) ) 
        {
         key=0;
+        _key=0;
+        currentBet=baseBet;
+currentCashout=baseCashout;
 
        }
-        if (key==1)
+
+       else  if (key==1 && _key==0)
        {
         currentBet=2;
         currentCashout=2.2;
@@ -80,13 +130,16 @@ currentCashout=2.2;
         currentCashout=2.2;
         _key=0;
        }
-       
-
        else 
        {
         currentBet=baseBet;
-currentCashout=baseCashout;
+        currentCashout=baseCashout;
        }
+       
+
+       
+        
+       
 
 
        
