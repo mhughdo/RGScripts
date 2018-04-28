@@ -14,8 +14,8 @@ var lossStreak = 0;
 //var winStreak=0;
 var key=0;
 var _key=0;
-var prvBet=0;
-var prvCashout=0;
+
+var lossTotal=0;
 
 engine.on('game_starting', function(info) {
 		      // console.log(key+" "+ _key);
@@ -52,8 +52,10 @@ engine.on('game_crash', function(data) {
 	//	return;
 	
 	if(engine.lastGamePlay()=='LOST'){
-
-		
+    if (currentBet!=1 && currentCashout!=1 )
+    { 
+lossTotal+= currentBet;
+		 }
     if (_key==2)
     {    
       lossStreak++;
@@ -130,16 +132,22 @@ currentCashout=2.2;
     var precr1=thing.tableHistory[1].game_crash/100;
    if (precr >2 )
    {
+    if (lossTotal <= currentBet)
+    {
+      lossTotal=0;
+      }
      if ( (lossStreak!=0 && key==0 ) || (lossStreak!=0 && key==1&&_key==2)   || (lossStreak!=0 && key==2&&_key==2)) 
        {
         key++;
         lossStreak=0;
        }
-       if ( (key!=0  && precr1>2 && precr>=2.2 ) || (key!=0&& precr>=2.2 && currentBet!=1) ) 
+       if ( (key!=0  && precr1>2 && precr>=2.2  && lossTotal==0) || (key!=0&& precr>=2.2 && currentBet!=1 && lossTotal==0) ) 
        {
         key=0;
         _key=0;
         currentBet=baseBet;
+      
+    
 currentCashout=baseCashout;
 
        }
@@ -198,9 +206,19 @@ currentCashout=1;
           else lossCnt++; 
 
          }
-         console.log("losscnt " + lossCnt +", wincnt : " + winCnt + ", key : " + key +", _key : " + _key);
+         console.log("losscnt " + lossCnt +", wincnt : " + winCnt + ", key : " + key +", _key : " + _key +", bet " + currentBet );
          if ( (winCnt>=lossCnt) || (lossCnt- winCnt)<=2  )
          {
-      engine.placeBet(currentBet*1000,  Math.round(currentCashout*1000)); }
+ if (currentCashout==1)
+ {
+  engine.placeBet(currentBet*100,  Math.round(currentCashout*100));
+ }
+ 
+ else 
+ {
+   engine.placeBet(currentBet*1000,  Math.round(currentCashout*100)); }
+ }
+     
+      
 	
 });
