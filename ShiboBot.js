@@ -100,9 +100,9 @@ engine.chat("/unmute"+res); }
               var result = data.message.match(regex).map(function(v) { return parseFloat(v); });
             var res = data.message.match(/>/g);
             var res1= data.message.match(/</g);
-          
+            var na = data.message.replace("!count","");
+           na1=na.match(/n/g);
         
-		
         if ( (res == null && res1==null) || (res!= null) )
         {
             operat=">";
@@ -114,15 +114,52 @@ engine.chat("/unmute"+res); }
            //  let result = data.message.match(/\d+/g).map(n => parseFloat(n));
 
             
+           if (na1!= null)
+           {
+            if (result.length==1)
+            {
+                count(operat,1000,result[0]); 
+            }
+            else {
+                count(operat,1000,1000); 
+            }
+           }
+           else 
+           {
+            if (result.length==1)
+            {
+                
+                
+                    count(operat,result[0],1000); 
+                
+            }
+            else 
+            {
+                
+                
+
+                
+                  count(operat,result[0],result[1]);
+                
+            }
+           } /*
               if (result.length==1)
               {
-                      count(operat,result[0],1000);
+                  
+                  
+                      count(operat,result[0],1000); 
+                  
               }
               else 
               {
+                  
+                  
+
+                  
                     count(operat,result[0],result[1]);
+                  
               }
-            
+            */
         }
 
         
@@ -172,16 +209,16 @@ engine.chat("/unmute"+res); }
         else if (message.startsWith("!min") || message.startsWith("!minimum")) {
             //processByLength(message, min);
         }
-        else if (message.startsWith("!max") || message.startsWith("!maximum")) {
+        else if (message.startsWith("!max") || message.startsWith("!gap" ) )  {
            // processByLength(message, max);
         }
         else if (message.startsWith("!bst joking125") || message.startsWith("!bust joking125")) {
            // processJoking(message, jokingBust125);
         }
-        else if (message.startsWith("!bst joking4") || message.startsWith("!bust joking4")|| message.startsWith("!gap ")||message.startsWith("!gap joking")) {
+        else if (message.startsWith("!bst joking4") || message.startsWith("!bust joking4")||message.startsWith("!gap joking")) {
            // processJoking(message, jokingBust4);
         }
-/*
+        /*
         else if (message.startsWith("!gap") ) {
             var operat;
             gap=true;
@@ -351,13 +388,102 @@ avggap=avggap/_j;
 console.log(avggap);
 avggap=avggap.toFixed(2);
 console.log(avggap);
+//~~~~~~~~~~~~~~~most Common  
+
+var mostCommongap=0;
+var mostCommon=[];var _m=1;
+var mostCommonindex=[];
+var commonBool=[];
+var maxi=0;
+var maxival=0;
+var mostcommonAvg=0;
+var mostCommonlength=0;
+for (let i=1;i<_j;i++)
+{
+   commonBool[i]=true;
+   mostCommonindex[i]=0;
+}
+for (let i=1;i<_j;i++)
+{
+   for (let m=i+1;m<_j;m++)
+   {
+     if ( (_results[i]-_results[m])<5 &&  commonBool[i]==true &&  commonBool[m]==true)
+     {
+         mostCommonindex[i]++;
+         commonBool[m]=false;
+          mostCommon[_m]=_results[m];
+          _m++;
+          mostCommon[i]=_results[i];
+          _m++;
+
+     }
+   }
+}
+
+for (let i=0;i<_j;i++)
+{
+   if (mostCommonindex[i]>maxival)
+   {
+       maxival=mostCommonindex[i];
+       maxi=_results[i];
+
+   }
+}
+//console.log("len" + mostCommon.length +" " + _m);
+for (let i=1;i<mostCommon.length;i++)
+{
+   if (mostCommon[i]!= undefined )
+   {
+        if ( Math.abs(mostCommon[i]-maxi)  >6 )
+        {
+            mostCommon[i]=0;
+        }
+        if (mostCommon[i]!=0)
+        {
+         mostCommonlength++;
+        }
+        //console.log(mostCommon[i]);
+  mostcommonAvg+= mostCommon[i]; 
+    }
+}
+console.log("len " + mostCommonlength +" " + mostcommonAvg+" " + _results[maxi]);
+mostcommonAvg=mostcommonAvg/mostCommonlength;
+mostcommonAvg=mostcommonAvg.toFixed(0);
+
+
+
+//~~~~~~~~~~~~~~~ 
+  /*
+var counts = {};
+  var compare = 0;
+  var mostFrequent;
+  
+     for(var i = 1; i < _j; i++){
+         var word = _results[i];
+         
+         if(counts[word] === undefined){
+             counts[word] = 1;
+         }else{
+             counts[word] = counts[word] + 1;
+         }
+         if(counts[word] > compare){
+               compare = counts[word];
+               mostFrequent = _results[i];
+         }
+      } */ 
 if ( target==0)
 {
-responseText+="Number of games = " + target +" in " + len +" games : "+ cout  +". Longest gap : " + maxgap +  ", Avg gap : " + avggap +" games " ;
+responseText+="Number of games = " + target +" in " + len +" games : "+ cout  +". Longest gap : " + (maxgap-1) + ",Most common gap : "+ (mostcommonAvg-1) + "( " + mostCommonlength +" times )"+  ", Avg gap : " + avggap +" games " ;
 }
 else 
 {
-    responseText+="Number of games " + operat + target +" in " + len +" games : "+ cout  +". Longest gap : " + maxgap +". Current : " +resultsid[0] +  " games ago  "+ "(" +results[0]+"x )"  +" , Avg gap : " + avggap +" games "  ;
+    if (mostCommonlength==1)
+    {
+        responseText+="Number of games " + operat + target +" in " + len +" games : "+ cout  +". Longest gap : " + maxgap +". Current : " +resultsid[0] +  " games ago  "+ "(" +results[0]+"x )"  +" , Avg gap : " + avggap +" games "  ;
+    }
+    else {
+    responseText+="Number of games " + operat + target +" in " + len +" games : "+ cout  +". Longest gap : " + (maxgap-1) +",Most common gap : "+ (mostcommonAvg-1) + "( " + mostCommonlength +" times )"+   ". Current : " +resultsid[0] +  " games ago  "+ "(" +results[0]+"x )"  +" , Avg gap : " + avggap +" games "  ;
+    }
 }
 say(responseText);
 
