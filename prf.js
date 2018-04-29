@@ -6,7 +6,7 @@ var lossStreak = 0;
 var key=0;
 var act=false;
 var totalLoss=baseBet;
-
+var cc=0;
 engine.on('game_starting', function(info) {
 if (act==true)
 {
@@ -28,13 +28,23 @@ engine.on('game_crash', function(data) {
         if ( thing.tableHistory[i].game_crash/100>5)
         {
             act=true;
+            cc++;
             return;
         }
         else 
         {
             act=false;
-currentBet=baseBet;
-totalLoss=baseBet;
+
+
+        }
+        if (act==false)
+        {
+            cc=0;
+        }
+        if (cc==0)
+        {
+            totalLoss=baseBet;
+            currentBet=baseBet; 
         }
     
         
@@ -65,7 +75,9 @@ totalLoss=baseBet;
        // console.log(total)
 	}
 	else if  (engine.lastGamePlay()=='WON' )   { 
+        cc=0;
         currentBet=baseBet;
+        totalLoss=baseBet;
         currentCashout=baseCashout;
     
  }
