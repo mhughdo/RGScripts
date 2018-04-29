@@ -15,6 +15,7 @@ if (act==true)
     
     bet=parseInt(bet);
    // console.log(bet)
+   cc=0;
     engine.placeBet( bet*100,  Math.round(currentCashout*100));
 }
 	
@@ -27,32 +28,24 @@ engine.on('game_crash', function(data) {
     {
         if ( thing.tableHistory[i].game_crash/100>5)
         {
-            act=true;
+           
             cc++;
             return;
         }
-        else 
-        {
-            act=false;
-
-
-        }
-        if (act==false)
-        {
-            cc=0;
-        }
-        if (cc==0)
-        {
-            totalLoss=baseBet;
-            currentBet=baseBet; 
-        }
+       
+       
     
         
     }
   }
   check();
-  console.log(act);
-    if (act==true)
+
+if (cc==0)
+{
+    currentBet=baseBet;
+        totalLoss=baseBet;
+}
+    if (cc!=0)
    {
 	
 	if(engine.lastGamePlay()=='NOT_PLAYED')
