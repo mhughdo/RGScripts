@@ -25,7 +25,7 @@ engine.on('game_crash', function(data) {
     var thing = engine.getEngine();
     for (let i=0;i<7;i++)
     {
-        if ( thing.tableHistory[i].game_crash/100>10)
+        if ( thing.tableHistory[i].game_crash/100>5)
         {
             act=true;
             return;
@@ -33,6 +33,8 @@ engine.on('game_crash', function(data) {
         else 
         {
             act=false;
+currentBet=baseBet;
+totalLoss=baseBet;
         }
     
         
