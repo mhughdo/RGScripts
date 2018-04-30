@@ -118,10 +118,10 @@ engine.chat("/unmute"+res); }
            {
             if (result.length==1)
             {
-                count(operat,1000,result[0]); 
+               say( count(operat,1000,result[0],1) ); 
             }
             else {
-                count(operat,1000,1000); 
+                 say (count(operat,1000,1000,2)); 
             }
            }
            else 
@@ -130,17 +130,46 @@ engine.chat("/unmute"+res); }
             {
                 
                 
-                    count(operat,result[0],1000); 
+                    say(count(operat,result[0],1000,1)); 
                 
             }
-            else 
+            else  if (result.length==2)
             {
                 
                 
 
                 
-                  count(operat,result[0],result[1]);
+                  say (count(operat,result[0],result[1],2));
                 
+            }
+            else 
+            {
+                var responeTex="Number of games " + operat + result[0] + " in " ;
+                for (let i=1;i<result.length;i++)
+                {
+                    if (i== (result.length-1))
+                    {
+                        responeTex+= result[i] +" " ;
+                    }
+                    else 
+                    {
+                               responeTex+= result[i] +", ";
+                    }
+                }
+                responeTex+= " games : ";
+                for (let i=1;i<result.length;i++)
+                {
+                    if (i== (result.length-1))
+                    {
+                        responeTex+= count(operat,result[0],result[i],result.length)+" ";
+                    }
+                    else 
+                    {
+                    responeTex+= count(operat,result[0],result[i],result.length)+", ";
+                    }
+                }
+                say(responeTex);
+                        
             }
            } /*
               if (result.length==1)
@@ -308,7 +337,7 @@ engine.chat("/unmute"+res); }
  Calculations for requests.
 ===================================*/
 
-function count(operat , target,len)
+function count(operat , target,len,lenr)
 {
     var results=[];
     var resultsid=[];
@@ -392,18 +421,22 @@ console.log(avggap);
 if ( target==0)
 {
 
-    responseText+="Number of games " + "=" + target +" in " + len +" games : "+ cout  +". Longest gap : " + maxgap +". Current : " +resultsid[0] +  " games ago  "+ "(" +results[0]+"x )"  +" , Avg gap : " + avggap +" games "  ;
+    return responseText+="Number of games " + "=" + target +" in " + len +" games : "+ cout  +". Longest gap : " + maxgap +". Current : " +resultsid[0] +  " games ago  "+ "(" +results[0]+"x )"  +" , Avg gap : " + avggap +" games "  ;
 //responseText+="Number of games = " + target +" in " + len +" games : "+ cout  +". Longest gap : " + (maxgap-1) + ",Most common gap : "+ (mostcommonAvg-1) + "( " + mostCommonlength +" times )"+  ", Avg gap : " + avggap +" games " ;
 }
 else 
 {
+    if (lenr>2)
+    {
+        return cout;
+    }
     
-        responseText+="Number of games " + operat + target +" in " + len +" games : "+ cout  +". Longest gap : " + maxgap +". Current : " +resultsid[0] +  " games ago  "+ "(" +results[0]+"x )"  +" , Avg gap : " + avggap +" games "  ;
+       return  responseText+="Number of games " + operat + target +" in " + len +" games : "+ cout  +". Longest gap : " + maxgap +". Current : " +resultsid[0] +  " games ago  "+ "(" +results[0]+"x )"  +" , Avg gap : " + avggap +" games "  ;
    
    // responseText+="Number of games " + operat + target +" in " + len +" games : "+ cout  +". Longest gap : " + (maxgap-1) +",Most common gap : "+ (mostcommonAvg-1) + "( " + mostCommonlength +" times )"+   ". Current : " +resultsid[0] +  " games ago  "+ "(" +results[0]+"x )"  +" , Avg gap : " + avggap +" games "  ;
     
 }
-say(responseText);
+//say(responseText);
 
 }
 function nyan(num)
