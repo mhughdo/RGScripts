@@ -120,8 +120,37 @@ engine.chat("/unmute"+res); }
             {
                say( count(operat,1000,result[0],1) ); 
             }
-            else {
+            else if (result.length==2)
+            {
                  say (count(operat,1000,1000,2)); 
+            }
+            else
+            {
+                var responeTex="Number of Nyan " +  " in " ;
+                for (let i=1;i<result.length;i++)
+                {
+                    if (i== (result.length-1))
+                    {
+                        responeTex+= result[i] +" " ;
+                    }
+                    else 
+                    {
+                               responeTex+= result[i] +", ";
+                    }
+                }
+                responeTex+= " games : ";
+                for (let i=1;i<result.length;i++)
+                {
+                    if (i== (result.length-1))
+                    {
+                        responeTex+= count(operat,1000,result[i],result.length)+" ";
+                    }
+                    else 
+                    {
+                    responeTex+= count(operat,1000,result[i],result.length)+", ";
+                    }
+                }
+                say(responeTex);
             }
            }
            else 
