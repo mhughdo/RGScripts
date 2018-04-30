@@ -42,8 +42,7 @@ engine.on('game_crash', function(data) {
 console.log(cc);
 if (cc==0)
 {
-    currentBet=baseBet;
-        totalLoss=baseBet;
+    
 }
     if (cc!=0)
    {
