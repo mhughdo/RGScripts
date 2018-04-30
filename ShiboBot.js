@@ -127,7 +127,7 @@ engine.chat("/unmute"+res); }
             else
             {
                 var responeTex="Number of Nyan " +  " in " ;
-                for (let i=1;i<result.length;i++)
+                for (let i=0;i<result.length;i++)
                 {
                     if (i== (result.length-1))
                     {
@@ -139,7 +139,7 @@ engine.chat("/unmute"+res); }
                     }
                 }
                 responeTex+= " games : ";
-                for (let i=1;i<result.length;i++)
+                for (let i=0;i<result.length;i++)
                 {
                     if (i== (result.length-1))
                     {
