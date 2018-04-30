@@ -8,14 +8,14 @@ var act=false;
 var totalLoss=baseBet;
 var cc=0;
 engine.on('game_starting', function(info) {
-if (act==true)
+if (cc!=0)
 {
   //  console.log(currentBet);
    var  bet=Math.floor(currentBet);
-    
+    cc=0;
     bet=parseInt(bet);
    // console.log(bet)
-   cc=0;
+   
     engine.placeBet( bet*100,  Math.round(currentCashout*100));
 }
 	
@@ -39,7 +39,7 @@ engine.on('game_crash', function(data) {
     }
   }
   check();
-
+console.log(cc);
 if (cc==0)
 {
     currentBet=baseBet;
@@ -68,7 +68,7 @@ if (cc==0)
        // console.log(total)
 	}
 	else if  (engine.lastGamePlay()=='WON' )   { 
-        cc=0;
+        
         currentBet=baseBet;
         totalLoss=baseBet;
         currentCashout=baseCashout;
