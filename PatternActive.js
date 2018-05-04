@@ -104,6 +104,8 @@ engine.on("game_crash", function (data) {
     var winChance=0; 
     var lostChance=0; 
     var predictnum=0; 
+    var instantBust=0;
+    var insChance=0;
     for (let i=1;i<k;i++) 
     { 
     // console.log( _games[index[i]-x].bust); 
@@ -113,6 +115,10 @@ engine.on("game_crash", function (data) {
     winChance++; 
     } 
     else lostChance++; 
+    if( _games[index[i]-x].bust <1.1 )
+    {
+        instantBust++;
+    }
     predictnum += ( _games[index[i]-x].bust) ; 
     
     // console.log( predictnum); 
@@ -121,10 +127,11 @@ engine.on("game_crash", function (data) {
     winChance= (winChance/(lostChance+ winChance))* 100 ; 
    
     winChance = winChance.toFixed(2); 
-    
+    insChance=(instantBust/k)*100;
+    insChance=insChance.toFixed(2);
     predictnum = predictnum /(k-1) ; 
     predictnum = predictnum.toFixed(2); 
-    responseText+= "Predict next game : " + predictnum +"x "+ ". " + winChance + " % >2 next game " ; 
+    responseText+= "Predict next game : " + predictnum +"x "+ ". " + winChance + " % >2 next game " + ", InstantBust : " + instantBust+"( " + insChance +" % ) " ; 
     return responseText;
     
     //console.log(responseText) 
