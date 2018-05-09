@@ -444,9 +444,9 @@ if ( _results[i]>maxgap)
 avggap+= _results[i];
 }
 avggap=avggap/_j;
-console.log(avggap);
+//console.log(avggap);
 avggap=avggap.toFixed(2);
-console.log(avggap);
+//console.log(avggap);
 
 if ( target==0)
 {
@@ -458,7 +458,7 @@ else
 {
     if (lenr>2)
     {
-        return cout;
+        return cout+"( " + (maxgap-1) +" )";
     }
     
        return  responseText+="Number of games " + operat + target +" in " + len +" games : "+ cout  +". Longest gap : " + (maxgap-1) +". Current : " +resultsid[0] +  " games ago  "+ "(" +results[0]+"x )"  +" , Avg gap : " + avggap +" games "  ;
@@ -670,7 +670,7 @@ function nyan(num)
                               
 
 
-console.log(max_sequence+ " " + num+" " +len);
+//console.log(max_sequence+ " " + num+" " +len);
 	var sequence_count=0;
 	var start=0;
 	var index=[];
@@ -691,7 +691,7 @@ console.log(max_sequence+ " " + num+" " +len);
                                          sequence_count++; 
                                         
                                           if (sequence_count ==max_sequence) {
-                                              console.log(start);
+                                            //  console.log(start);
                                             start=i;
                                           
                                           if (start>index[x] )
@@ -880,7 +880,7 @@ _j++;
 for (let i=0;i<results.length-1;i++)
 {
  _results[_j]=parseInt(Math.abs(resultsid[i]-resultsid[i+1]));
- console.log(_results[_j]+" ");
+ //console.log(_results[_j]+" ");
  _j++;
 }
 responseText+="The last " + _results[0] + "x : " + (resultsid[0]+1) +" games ago. " + ",  " ;
