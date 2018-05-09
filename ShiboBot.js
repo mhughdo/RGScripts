@@ -127,7 +127,7 @@ engine.chat("/unmute"+res); }
             else
             {
                 var responeTex="Number of Nyan " +  " in " ;
-                for (let i=1;i<result.length;i++)
+                for (let i=0;i<result.length;i++)
                 {
                     if (i== (result.length-1))
                     {
@@ -139,7 +139,7 @@ engine.chat("/unmute"+res); }
                     }
                 }
                 responeTex+= " games : ";
-                for (let i=1;i<result.length;i++)
+                for (let i=0;i<result.length;i++)
                 {
                     if (i== (result.length-1))
                     {
@@ -450,7 +450,7 @@ console.log(avggap);
 if ( target==0)
 {
 
-    return responseText+="Number of games " + "=" + target +" in " + len +" games : "+ cout  +". Longest gap : " + maxgap +". Current : " +resultsid[0] +  " games ago  "+ "(" +results[0]+"x )"  +" , Avg gap : " + avggap +" games "  ;
+    return responseText+="Number of games " + "=" + target +" in " + len +" games : "+ cout  +". Longest gap : " + (maxgap-1) +". Current : " +resultsid[0] +  " games ago  "+ "(" +results[0]+"x )"  +" , Avg gap : " + avggap +" games "  ;
 //responseText+="Number of games = " + target +" in " + len +" games : "+ cout  +". Longest gap : " + (maxgap-1) + ",Most common gap : "+ (mostcommonAvg-1) + "( " + mostCommonlength +" times )"+  ", Avg gap : " + avggap +" games " ;
 }
 else 
@@ -460,7 +460,7 @@ else
         return cout;
     }
     
-       return  responseText+="Number of games " + operat + target +" in " + len +" games : "+ cout  +". Longest gap : " + maxgap +". Current : " +resultsid[0] +  " games ago  "+ "(" +results[0]+"x )"  +" , Avg gap : " + avggap +" games "  ;
+       return  responseText+="Number of games " + operat + target +" in " + len +" games : "+ cout  +". Longest gap : " + (maxgap-1) +". Current : " +resultsid[0] +  " games ago  "+ "(" +results[0]+"x )"  +" , Avg gap : " + avggap +" games "  ;
    
    // responseText+="Number of games " + operat + target +" in " + len +" games : "+ cout  +". Longest gap : " + (maxgap-1) +",Most common gap : "+ (mostcommonAvg-1) + "( " + mostCommonlength +" times )"+   ". Current : " +resultsid[0] +  " games ago  "+ "(" +results[0]+"x )"  +" , Avg gap : " + avggap +" games "  ;
     
@@ -811,12 +811,12 @@ console.log(max_sequence+ " " + num+" " +len);
                       if (target==0)
                       {
 
-                    responseText+= (resultsid[0]+1) + " games ago "+"#"+  results[0] +"x" ;
+                    responseText+= (resultsid[0]) + " games ago "+"#"+  results[0] +"x" ;
                     say("Seen " + target+ ": " + responseText);
                       }
                       else 
                       {
-                        responseText+= (resultsid[0]+1) + " games ago "+"#"+  results[0] +"x" ;
+                        responseText+= (resultsid[0]) + " games ago "+"#"+  results[0] +"x" ;
                         if (operat==">")
                         {
                             say("Seen > " +target +": "   + responseText);
@@ -835,10 +835,10 @@ console.log(max_sequence+ " " + num+" " +len);
                      
                  if (i==num)
                  {
-                       responseText+= (resultsid[i]+1)+" games ago "+ "#"+  results[i] +"x" +". "; }
+                       responseText+= (resultsid[i])+" games ago "+ "#"+  results[i] +"x" +". "; }
                        else 
                        {
-                        responseText+= (resultsid[i]+1)+" games ago " + "#"+ results[i] +"x"  +", ";
+                        responseText+= (resultsid[i])+" games ago " + "#"+ results[i] +"x"  +", ";
                        }
                   
                   
