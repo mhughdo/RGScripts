@@ -9,7 +9,7 @@ var _ignore = [
 engine.on("msg", function (data) {
     var gap=false;
 
-    if (data.channelName === 'english')
+    if (data.channelName === 'spam')
     {
 if (data.username == "livswild12")
 {
