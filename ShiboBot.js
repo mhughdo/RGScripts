@@ -301,6 +301,7 @@ engine.chat("/unmute"+res); }
                  bust(result[0],operat,result[1],gap);
               }
         } */ 
+        
         else if ((message.startsWith("!")&& message.length>1) ||message.startsWith("!bst") || message.startsWith("!bust") || message.startsWith("!0") ) {
             var operat;
             gap=false;
@@ -489,7 +490,7 @@ function nyan(num)
                       }
                       if (num==1)
                       {
-                        responseText+=  (resultsid[0]+1) + " games ago "+"("+ results[0] +"x"+")"+". " +"https://raigames.io/game/"+(_games[0].id-resultsid[0]);
+                        responseText+=  (resultsid[0]) + " games ago "+"("+ results[0] +"x"+")"+". " +"https://raigames.io/game/"+(_games[0].id-resultsid[0]);
                         say("Meow Meow : " + responseText);
                     }
                       else 
@@ -499,10 +500,10 @@ function nyan(num)
                          
                      if (i==num)
                      {
-                           responseText+= (resultsid[i]+1)+" games ago "+"("+  results[i] +"x"+")"+". "; }
+                           responseText+= (resultsid[i])+" games ago "+"("+  results[i] +"x"+")"+". "; }
                            else 
                            {
-                            responseText+=  (resultsid[i]+1)+" games ago "+"("+  results[i]+"x" +")"+", ";
+                            responseText+=  (resultsid[i])+" games ago "+"("+  results[i]+"x" +")"+", ";
                            }
                       
                       
