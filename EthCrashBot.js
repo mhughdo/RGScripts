@@ -490,7 +490,7 @@ function nyan(num)
                       }
                       if (num==1)
                       {
-                        responseText+=  (resultsid[0]) + " games ago "+"("+ results[0] +"x"+")"+". " +"https://raigames.io/game/"+(_games[0].id-resultsid[0]);
+                        responseText+=  (resultsid[0]) + " games ago "+"("+ results[0] +"x"+")"+". " +"https://ethcrash.io/game/"+(_games[0].id-resultsid[0]);
                         say("Meow Meow : " + responseText);
                     }
                       else 
