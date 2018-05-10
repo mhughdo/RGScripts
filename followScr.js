@@ -31,7 +31,7 @@ engine.on('game_starting', function(info) {
     {
         bet=StartingBet;
     }
-    if (play && (bet/100)<=100 )
+    if (play && (bet/100)<=50)
     {
     engine.placeBet(bet, AutoCashout, function(){ });
     }
