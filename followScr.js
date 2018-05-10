@@ -27,6 +27,10 @@ engine.on('game_starting', function(info) {
 	//lastBet = bet*100;
     //bet = Math.round(bet)*100;
     console.log(bet/100);
+    if (play==false && bet!= StartingBet)
+    {
+        bet=StartingBet;
+    }
     if (play && (bet/100)<=100 )
     {
     engine.placeBet(bet, AutoCashout, function(){ });
