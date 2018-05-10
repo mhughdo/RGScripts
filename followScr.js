@@ -15,7 +15,7 @@ var	StartingBet		=	100, //(INTEGER) Initial bet that'll snipe the bonus. Note: 1
 	AutoCashout		=	1000000; //(FLOAT) Will increase +1.30x of the last bet if lost.
 
 //--------> EDIT OVER THIS LINE <--------
-var user='weddingcrasher2';
+var user='Wesley';
 var bet=StartingBet;
 var play=false;
 engine.on('game_starting', function(info) {
@@ -26,6 +26,7 @@ engine.on('game_starting', function(info) {
 //	else bet = StartingBet / 100;
 	//lastBet = bet*100;
     //bet = Math.round(bet)*100;
+    console.log(bet/100);
     if (play && (bet/100)<=100 )
     {
     engine.placeBet(bet, AutoCashout, function(){ });
@@ -52,7 +53,10 @@ engine.on('game_started', function(data) {
             
             bet=data[Object.keys(data)[i]].bet;
             bet=parseInt(bet);
+           
             bet=Math.floor(bet);
+          
+        
             break;
         }
         else 
