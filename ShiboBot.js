@@ -653,13 +653,23 @@ function nyan(num)
                                         }
                                     }
                    //  console.log(start);
+                   var ct=0;
                         for (var i=start-1;i>=start-max_sequence1;i--)
                         {
+                            ct++;
                             if(i==start-max_sequence1)
                             {
                             responseText+= results[i]+" ";
                             }
-                            else responseText+= results[i]+", ";
+                            else  {responseText+= results[i]+", "; }
+                            if (ct==6)
+                            {
+                                
+                                responseText+= "...";
+                                break;
+                            }
+                          
+    
 
                             }
                             var m=count-max_sequence1+1;
@@ -719,13 +729,14 @@ function nyan(num)
                                             }
                         
 	
-	
+	 var ct=0;
 	 for (var k=0;k<x;k++)
 	 {
         
      responeText+= "Seen   " + (index[k]+1 ) +" games ago : " +"(" ; 
        for (var g=index[k];g>(index[k]-max_sequence);g--)
        {
+           ct++;
            if (g==(index[k]-max_sequence-1))
            {
             responeText+=_games[g].bust+" ";
@@ -733,6 +744,12 @@ function nyan(num)
            else 
            {
                  responeText+=_games[g].bust+", ";
+           }
+           if (ct==6)
+           {
+               ct=0;
+               responeText+= "...";
+               break;
            }
        }
        if (k==(x-1))
