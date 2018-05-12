@@ -269,6 +269,7 @@ engine.chat("/unmute"+res); }
         else if (message.startsWith("!gapmax") ) {
             var operat;
             gapmax=true;
+            var wwtk=data.message.match(/x/g);
             gap=false;
             var res = data.message.match(/>/g);
          var res1= data.message.match(/</g);
