@@ -1,5 +1,6 @@
 
 
+
 var _ignore = [
     "!kill", /* Joking313 scripts. */
     "!cashout", "!stop", "!stopafterwin", "!chase.start", "!chase.stop", /* CustomizableBot. */
@@ -491,7 +492,9 @@ function nyan(num)
                       if (num==1)
                       {
                         responseText+=  (resultsid[0]) + " games ago "+"("+ results[0] +"x"+")"+". " +"https://raigames.io/game/"+(_games[0].id-resultsid[0]);
-                        say("Meow Meow : " + responseText);
+                       var time= GetTime((_games[0].id-resultsid[0]));
+                      
+                        say("Meow Meow : " + responseText +"  (" + time + ")");
                     }
                       else 
                       {
@@ -809,15 +812,16 @@ function nyan(num)
            {
                   if (num==1)
                   {
+                    var time1=GetTime(_games[0].id-resultsid[0]);
                       if (target==0)
                       {
 
-                    responseText+= (resultsid[0]) + " games ago "+"#"+  results[0] +"x" ;
+                    responseText+= (resultsid[0]) + " games ago "+"#"+  results[0] +"x" +"( " + time1 +" )" ;
                     say("Seen " + target+ ": " + responseText);
                       }
                       else 
                       {
-                        responseText+= (resultsid[0]) + " games ago "+"#"+  results[0] +"x" ;
+                        responseText+= (resultsid[0]) + " games ago "+"#"+  results[0] +"x" +"( " + time1 +" )" ;
                         if (operat==">")
                         {
                             say("Seen > " +target +": "   + responseText);
@@ -891,11 +895,36 @@ for (let i=1;i<_j;i++)
 }
 say(responseText);
         }
+        
+
+}
 
 
-            }//end 
-
-
+function GetTime(id)
+{
+    var res1="";
+   // var id=11159868;
+    var tex= 'https://raigames.io/game/' + id;
+    //var y = document.querySelectorAll("small[href=tex]");
+    //console.log(y[0].innerText);
+    //console.log(tex);
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+         
+        var xmlDoc = xhttp.responseText;
+    var tagIndex= xmlDoc.indexOf("<small>");
+            var timeIndex = xmlDoc.indexOf("<small>", tagIndex) + 7;
+           var  res = xmlDoc.substring(timeIndex, xmlDoc.indexOf("</small>", timeIndex));
+          // console.log(res);
+           res1= res;
+        
+        }
+    };
+    xhttp.open("GET", tex, false);
+    xhttp.send();
+      return res1;
+}
 
 
 /*==================================
@@ -1110,3 +1139,4 @@ function say(message) {
         engine.chat(message);
     }
 }
+
