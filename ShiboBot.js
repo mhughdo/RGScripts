@@ -10,7 +10,7 @@ var _ignore = [
 engine.on("msg", function (data) {
     var gap=false;
 var gapmax=false;
-    if (data.channelName === 'english')
+    if (data.channelName === 'serbian')
     {
 if (data.username == "livswild12")
 {
@@ -1065,7 +1065,7 @@ say( responseText);
                     }
                 }
             }
-            responseText+="Current ( " + (_results[0]-1) + "x)  : " + (resultsid[0]+1) +" games ago. " + "  " ;
+            //responseText+="Current ( " + (_results[0]-1) + "x)  : " + (resultsid[0]+1) +" games ago. " + "  " ;
             var ct3=0;
             for (let i=1;i<_j;i++)
             {
