@@ -10,7 +10,7 @@ var _ignore = [
 engine.on("msg", function (data) {
     var gap=false;
 var gapmax=false;
-    if (data.channelName === 'serbian')
+    if (data.channelName === 'spam')
     {
 if (data.username == "livswild12")
 {
