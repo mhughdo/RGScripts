@@ -1237,7 +1237,7 @@ function getCachedResults() {
 
     /* Pull remotely-stored results. */
     var csv = new XMLHttpRequest();
-    csv.open("GET", "https://corecompetency.github.io/RaiGamesScripts/Results.csv", false); /* Block, don't do this asynchronously. */
+    csv.open("GET", "https://raw.githubusercontent.com/ILivS/RGScripts/master/EthCrash.csv", false); /* Block, don't do this asynchronously. */
     csv.send(null);
     var lines = csv.responseText.split("\n").filter(function (ii) { return ii; });
     for (var ii = 0; ii < lines.length; ii++) {
