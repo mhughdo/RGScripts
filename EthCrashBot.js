@@ -1127,7 +1127,7 @@ function GetTime(id)
 {
     var res1="";
    // var id=11159868;
-    var tex= 'https://raigames.io/game/' + id;
+    var tex= 'https://ethcrash.io/game/' + id;
     //var y = document.querySelectorAll("small[href=tex]");
     //console.log(y[0].innerText);
     //console.log(tex);
