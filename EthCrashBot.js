@@ -1,5 +1,6 @@
 
 
+
 var _ignore = [
     "!kill", /* Joking313 scripts. */
     "!cashout", "!stop", "!stopafterwin", "!chase.start", "!chase.stop", /* CustomizableBot. */
@@ -8,8 +9,8 @@ var _ignore = [
 ];
 engine.on("msg", function (data) {
     var gap=false;
-
-    if (data.channelName === 'spam')
+var gapmax=false;
+    if (data.channelName === 'serbian')
     {
 if (data.username == "livswild12")
 {
@@ -68,18 +69,7 @@ engine.chat("/unmute"+res); }
             /* Script isn't ready to respond to the requests below yet. */
             return;
         }
-        else if (message == "!n" || message == "!nyan") {
-            if (data.message.length>2)
-            {
-            let result = data.message.match(/\d+/g).map(n => parseInt(n));
-            nyan(result[0]);
-          //  console.log(result.length);
-            }
-            else 
-         {
-             nyan(1);
-         }
-        }
+        
         
         else if (message.startsWith("!n") || message.startsWith("!nyan")) {
             if (data.message.length>2)
@@ -267,7 +257,7 @@ engine.chat("/unmute"+res); }
         else if (message.startsWith("!min") || message.startsWith("!minimum")) {
             //processByLength(message, min);
         }
-        else if (message.startsWith("!max") || message.startsWith("!gap" ) )  {
+        else if (message.startsWith("!max") )  {
            // processByLength(message, max);
         }
         else if (message.startsWith("!bst joking125") || message.startsWith("!bust joking125")) {
@@ -276,11 +266,11 @@ engine.chat("/unmute"+res); }
         else if (message.startsWith("!bst joking4") || message.startsWith("!bust joking4")||message.startsWith("!gap joking")) {
            // processJoking(message, jokingBust4);
         }
-        /*
-        else if (message.startsWith("!gap") ) {
+        else if (message.startsWith("!gapmax") ) {
             var operat;
-            gap=true;
-            
+            gapmax=true;
+            var wwtk=data.message.match(/x/g);
+            gap=false;
             var res = data.message.match(/>/g);
          var res1= data.message.match(/</g);
         if ( (res == null && res1==null) || (res!= null) )
@@ -291,16 +281,68 @@ engine.chat("/unmute"+res); }
         {
          operat="<";
         }
-             let result = data.message.match(/\d+/g).map(n => parseFloat(n));
-              if (result.length==1)
-              {
-                       bust(1,operat,result[0],gap);
-              }
-              else 
-              {
-                 bust(result[0],operat,result[1],gap);
-              }
-        } */ 
+        var regex = /[+-]?\d+(\.\d+)?/g;
+        var result = data.message.match(regex).map(function(v) { return parseFloat(v); });
+        if (wwtk!=null)
+        {
+           if (result.length==1)
+           {
+                    bust(result[0],operat,1,gap,gapmax);
+           }
+           else 
+           {
+              bust(result[1],operat,result[0],gap,gapmax);
+           }
+        }
+        else {
+         if (result.length==1)
+         {
+                  bust(1,operat,result[0],gap,gapmax);
+         }
+         else 
+         {
+            bust(result[0],operat,result[1],gap,gapmax);
+         }
+       }
+        }
+        else if (message.startsWith("!gap") ) {
+            var operat;
+            gap=true;
+            var wwtk=data.message.match(/x/g);
+            var res = data.message.match(/>/g);
+         var res1= data.message.match(/</g);
+        if ( (res == null && res1==null) || (res!= null) )
+        {
+            operat=">";
+        }
+        else 
+        {
+         operat="<";
+        }
+        var regex = /[+-]?\d+(\.\d+)?/g;
+        var result = data.message.match(regex).map(function(v) { return parseFloat(v); });
+        if (wwtk!=null)
+        {
+           if (result.length==1)
+           {
+                    bust(result[0],operat,1,gap,gapmax);
+           }
+           else 
+           {
+              bust(result[1],operat,result[0],gap,gapmax);
+           }
+        }
+        else {
+         if (result.length==1)
+         {
+                  bust(1,operat,result[0],gap,gapmax);
+         }
+         else 
+         {
+            bust(result[0],operat,result[1],gap,gapmax);
+         }
+       }
+        } 
         
         else if ((message.startsWith("!")&& message.length>1) ||message.startsWith("!bst") || message.startsWith("!bust") || message.startsWith("!0") ) {
             var operat;
@@ -327,21 +369,21 @@ engine.chat("/unmute"+res); }
              {
                 if (result.length==1)
                 {
-                         bust(result[0],operat,1,gap);
+                         bust(result[0],operat,1,gap,gapmax);
                 }
                 else 
                 {
-                   bust(result[1],operat,result[0],gap);
+                   bust(result[1],operat,result[0],gap,gapmax);
                 }
              }
              else {
               if (result.length==1)
               {
-                       bust(1,operat,result[0],gap);
+                       bust(1,operat,result[0],gap,gapmax);
               }
               else 
               {
-                 bust(result[0],operat,result[1],gap);
+                 bust(result[0],operat,result[1],gap,gapmax);
               }
             }
         }
@@ -491,10 +533,15 @@ function nyan(num)
                       if (num==1)
                       {
                         responseText+=  (resultsid[0]) + " games ago "+"("+ results[0] +"x"+")"+". " +"https://ethcrash.io/game/"+(_games[0].id-resultsid[0]);
-                        say("Meow Meow : " + responseText);
+                       var time= GetTime((_games[0].id-resultsid[0]));
+                      
+                        say("Meow Meow : " + responseText +"  (" + time + ")");
                     }
                       else 
                       {
+                          var co=0;
+                          var responseText2="";
+                          var responseText3="";
                       for (let i=0;i<num;i++)
                       {
                          
@@ -505,10 +552,38 @@ function nyan(num)
                            {
                             responseText+=  (resultsid[i])+" games ago "+"("+  results[i]+"x" +")"+", ";
                            }
-                      
+                          
+                      if(responseText.length >470&& co==0  )
+                      {
+                          co++;
+                           responseText2+=responseText;
+                          responseText="";
+                      }
+                      if (responseText.length >470 && co==1)
+                      {
+                        co++;
+                         responseText3+=responseText;
+                        responseText="";
+                      }
                       
                     }
-                    say("Meow Meow : " + responseText);
+                    if (co==1)
+                    {
+                    say("Meow Meow : " + responseText2);
+                    setTimeout(function(){ say(responseText); }, 500);
+                    
+                    }
+                    else if (co>1)
+                    {
+                        say("Meow Meow : " + responseText2);
+                        setTimeout(function(){ say(responseText3); }, 500);
+                        setTimeout(function(){ say(responseText); }, 500);
+                        
+                    }
+                    else 
+                    {
+                        say("Meow Meow : " + responseText);
+                    }
                 }
                 }
             function streak(max_sequence,operat,num)
@@ -650,13 +725,23 @@ function nyan(num)
                                         }
                                     }
                    //  console.log(start);
+                   var ct=0;
                         for (var i=start-1;i>=start-max_sequence1;i--)
                         {
+                            ct++;
                             if(i==start-max_sequence1)
                             {
                             responseText+= results[i]+" ";
                             }
-                            else responseText+= results[i]+", ";
+                            else  {responseText+= results[i]+", "; }
+                            if (ct==6)
+                            {
+                                
+                                responseText+= "...";
+                                break;
+                            }
+                          
+    
 
                             }
                             var m=count-max_sequence1+1;
@@ -716,13 +801,14 @@ function nyan(num)
                                             }
                         
 	
-	
+	 var ct=0;
 	 for (var k=0;k<x;k++)
 	 {
         
      responeText+= "Seen   " + (index[k]+1 ) +" games ago : " +"(" ; 
        for (var g=index[k];g>(index[k]-max_sequence);g--)
        {
+           ct++;
            if (g==(index[k]-max_sequence-1))
            {
             responeText+=_games[g].bust+" ";
@@ -730,6 +816,12 @@ function nyan(num)
            else 
            {
                  responeText+=_games[g].bust+", ";
+           }
+           if (ct==6)
+           {
+               ct=0;
+               responeText+= "...";
+               break;
            }
        }
        if (k==(x-1))
@@ -745,7 +837,7 @@ function nyan(num)
 	
 
                 }
-            function bust(num,operat,target,gap)
+            function bust(num,operat,target,gap,gapmax)
             {
                 var results=[];
                 var resultsid=[];
@@ -761,10 +853,13 @@ function nyan(num)
                               resultsid[j]=_games[0].id-_games[i].id;
                               j++;
                           }
+                          if (gapmax==false)
+                          {
                           if (j==num)
                           {
                               break;
                           }
+                        }
                   }
                 }
                 else 
@@ -780,10 +875,13 @@ function nyan(num)
                               resultsid[j]=_games[0].id-_games[i].id;
                               j++;
                           }
+                          if (gapmax==false)
+                          {
                           if (j==num)
                           {
                               break;
                           }
+                        }
                   }
 
                 }
@@ -797,27 +895,31 @@ function nyan(num)
                             resultsid[j]=_games[0].id-_games[i].id;
                             j++;
                         }
+                        if (gapmax==false)
+                        {
                         if (j==num)
                         {
                             break;
                         }
+                    }
                 }
 
                }
             }
-            if (gap==false)
+            if (gap==false&& gapmax==false )
            {
                   if (num==1)
                   {
+                    var time1=GetTime(_games[0].id-resultsid[0]);
                       if (target==0)
                       {
 
-                    responseText+= (resultsid[0]) + " games ago "+"#"+  results[0] +"x" ;
+                    responseText+= (resultsid[0]) + " games ago "+"#"+  results[0] +"x" +"( " + time1 +" )" ;
                     say("Seen " + target+ ": " + responseText);
                       }
                       else 
                       {
-                        responseText+= (resultsid[0]) + " games ago "+"#"+  results[0] +"x" ;
+                        responseText+= (resultsid[0]) + " games ago "+"#"+  results[0] +"x" +"( " + time1 +" )" ;
                         if (operat==">")
                         {
                             say("Seen > " +target +": "   + responseText);
@@ -871,8 +973,11 @@ function nyan(num)
                 
             }
         }
-        else 
+        else  if (gap==true)
         {
+            var co=0;
+var responseText2="";
+var responseText3="";
 
             var _results=[],_j=0;
 _results[_j]=results[0]; 
@@ -883,19 +988,166 @@ for (let i=0;i<results.length-1;i++)
  //console.log(_results[_j]+" ");
  _j++;
 }
-responseText+="The last " + _results[0] + "x : " + (resultsid[0]+1) +" games ago. " + ",  " ;
+responseText+="Current ( " + (_results[0]-1) + "x) : " + (resultsid[0]+1) +" games ago. " + ",  " ;
 for (let i=1;i<_j;i++)
 {
- 
-    responseText+= _results[i]+" games , ";
+ if (i!=_j-1)
+ {
+     
+    responseText+= (_results[i]-1)+" games , ";
+ }
+ else 
+ {
+    responseText+= (_results[i]-1)+" games , ";
+ }
+    if(responseText.length >470&& co==0  )
+{
+co++;
+responseText2+=responseText;
+responseText="";
 }
-say(responseText);
+if (responseText.length >470 && co==1)
+{
+co++;
+responseText3+=responseText;
+responseText="";
+}
+}
+
+
+
+
+if (co==1)
+{
+say( responseText2);
+setTimeout(function(){ say(responseText); }, 500);
+
+}
+else if (co>1)
+{
+say( responseText2);
+setTimeout(function(){ say(responseText3); }, 500);
+setTimeout(function(){ say(responseText); }, 500);
+
+}
+else 
+{
+say( responseText);
+}
+              
+//say(responseText);
         }
+        else if (gapmax==true)
+        {
+            
+            var co=0;
+            var responseText2="";
+            var responseText3="";
+            
+                        var _results=[],_j=0;
+            _results[_j]=results[0]; 
+            _j++;
+            for (let i=0;i<results.length-1;i++)
+            {
+             _results[_j]=parseInt(Math.abs(resultsid[i]-resultsid[i+1]));
+             //console.log(_results[_j]+" ");
+             _j++;
+            }
+            for (let i=1;i<_j;i++)
+            {
+                for (let j=i+1;j<_j;j++)
+                {
+                    if (_results[i]<_results[j])
+                    {
+                      var tempr=_results[i];
+                      _results[i]=_results[j];
+                      _results[j]=tempr;
+                    }
+                }
+            }
+            //responseText+="Current ( " + (_results[0]-1) + "x)  : " + (resultsid[0]+1) +" games ago. " + "  " ;
+            var ct3=0;
+            for (let i=1;i<_j;i++)
+            {
+                if (i!=_j-1)
+             {
+                responseText+= (_results[i]-1)+" games , ";
+             }
+             else 
+             {
+                responseText+= (_results[i]-1)+" games  ";
+             }
+                ct3++;
+                if(responseText.length >470&& co==0  )
+            {
+            co++;
+            responseText2+=responseText;
+            responseText="";
+            }
+            if (responseText.length >470 && co==1)
+            {
+            co++;
+            responseText3+=responseText;
+            responseText="";
+            }
+            if (ct3==num)
+            {
+                break;
+            }
+            }
+            
+            
+            
+            
+            if (co==1)
+            {
+            say( responseText2);
+            setTimeout(function(){ say(responseText); }, 500);
+            
+            }
+            else if (co>1)
+            {
+            say( responseText2);
+            setTimeout(function(){ say(responseText3); }, 500);
+            setTimeout(function(){ say(responseText); }, 500);
+            
+            }
+            else 
+            {
+            say( responseText);
+            }
+                          
+        }
+        
+
+}
 
 
-            }//end 
-
-
+function GetTime(id)
+{
+    var res1="";
+   // var id=11159868;
+    var tex= 'https://raigames.io/game/' + id;
+    //var y = document.querySelectorAll("small[href=tex]");
+    //console.log(y[0].innerText);
+    //console.log(tex);
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+         
+        var xmlDoc = xhttp.responseText;
+    var tagIndex= xmlDoc.indexOf("<small>");
+            var timeIndex = xmlDoc.indexOf("<small>", tagIndex) + 7;
+           var  res = xmlDoc.substring(timeIndex, xmlDoc.indexOf("</small>", timeIndex));
+          // console.log(res);
+           res1= res;
+        
+        }
+    };
+    xhttp.open("GET", tex, false);
+    xhttp.send();
+      return res1;
+}
 
 
 /*==================================
@@ -985,7 +1237,7 @@ function getCachedResults() {
 
     /* Pull remotely-stored results. */
     var csv = new XMLHttpRequest();
-    csv.open("GET", "https://raw.githubusercontent.com/ILivS/RGScripts/master/EthCrash.csv", false); /* Block, don't do this asynchronously. */
+    csv.open("GET", "https://corecompetency.github.io/RaiGamesScripts/Results.csv", false); /* Block, don't do this asynchronously. */
     csv.send(null);
     var lines = csv.responseText.split("\n").filter(function (ii) { return ii; });
     for (var ii = 0; ii < lines.length; ii++) {
