@@ -1128,25 +1128,24 @@ function GetTime(id)
     var res1="";
    // var id=11159868;
     var tex= 'https://ethcrash.io/game/' + id;
-    //var y = document.querySelectorAll("small[href=tex]");
-    //console.log(y[0].innerText);
-    //console.log(tex);
     var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-         
-        var xmlDoc = xhttp.responseText;
-    var tagIndex= xmlDoc.indexOf("<small>");
-            var timeIndex = xmlDoc.indexOf("<small>", tagIndex) + 7;
-           var  res = xmlDoc.substring(timeIndex, xmlDoc.indexOf("</small>", timeIndex));
-          // console.log(res);
-           res1= res;
-        
-        }
-    };
-    xhttp.open("GET", tex, false);
-    xhttp.send();
-      return res1;
+xhttp.onreadystatechange = function() {
+   if (this.readyState == 4 && this.status == 200) {
+       myFunction(this);
+   }
+};
+xhttp.open("GET", tex, true);
+xhttp.send();
+
+
+function myFunction(xml) {
+    var xmlDoc = xml.responseText;
+var tagIndex= xmlDoc.indexOf("<p>Played:&nbsp;");
+            var timeIndex = xmlDoc.indexOf("<p>Played:&nbsp;", tagIndex) + 16;
+           var  res = xmlDoc.substring(timeIndex, xmlDoc.indexOf("on ", timeIndex));
+    res1=res;
+}
+return res1;
 }
 
 
