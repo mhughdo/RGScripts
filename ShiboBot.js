@@ -10,7 +10,7 @@ var _ignore = [
 engine.on("msg", function (data) {
     var gap=false;
 var gapmax=false;
-    if (data.channelName === 'serbian')
+    if (data.channelName === 'english')
     {
 if (data.username == "livswild12")
 {
@@ -82,7 +82,31 @@ engine.chat("/unmute"+res); }
          {
              nyan(1);
          }
-        }
+        }/*
+        else if (message.startsWith("!streak ")) {
+            var operat;
+            var regex = /[+-]?\d+(\.\d+)?/g;
+           
+          //  var str = '<tag value="abc hd <1.25 2 " value1="-12.334" />';
+            var result = data.message.match(regex).map(function(v) { return parseFloat(v); });
+           //
+           // console.log(result.length);
+        //    console.log(floats);
+                   var res = data.message.match(/>/g);
+                var res1= data.message.match(/</g);
+               if ( (res == null && res1==null) || (res1!= null) )
+               {
+                   operat="<";
+               }
+               else 
+               {
+                operat=">";
+               }
+                   // let result = data.message.match(/\d+/g).map(n => parseFloat(n));
+                    
+                         gapAdvance(result[0],operat,result[1],result[2]);
+                     
+                    } */ 
         else if (message.startsWith("!count ")|| message.startsWith("!c ") ) {
             var operat;
            
@@ -239,10 +263,12 @@ engine.chat("/unmute"+res); }
                      {
                          streak(result[0],operat,result[1]);
                      }
+                     
                      else 
                      {
-                         customStreak(result[0],operat,result[1],result[2]);
-                     }
+                        gapAdvance(result[0],operat,result[1],result[2]);
+                       //  customStreak(result[0],operat,result[1],result[2]);
+                     } 
                     }
 
         else if (message.startsWith("!med") || message.startsWith("!median")) {
@@ -511,6 +537,135 @@ else
 //say(responseText);
 
 }
+function gapAdvance(num,operat,len,max_sequence)
+{
+   var avggap=0; 
+    len+=1;
+    var sequence_count=0;
+	var start=0;
+	var index=[];
+    var x=0;
+   for (let i=0;i<100000;i++)
+   {
+       index[i]=0;
+   }
+    var responeText="";
+
+		for (var m=0;m<len;m++)
+		{
+                                for(var  i = 0+start; i<_games.length;i++) {
+                          
+                            
+                                    if (_games[i].bust < num ) {
+                                      
+                                         sequence_count++; 
+                                        
+                                          if (sequence_count ==max_sequence) {
+                                            //  console.log(start);
+                                            start=i;
+                                          
+                                          if (start>index[x] )
+                                          	{
+                                          		index[x]=start;
+                                          x++;
+											  }
+                                          
+                                           max_sequence = sequence_count;
+                                        break;
+                                          
+                                          
+                                           
+                                          }
+                                        }
+                                     else {
+                                        sequence_count = 0;
+                                       
+                                             } 
+                                     
+                                            }
+                                            }
+                                            var streakG=[],r=0;
+                                            var streakR=[],e=0;
+                                            responeText+= "The last " + (len-1) +"  streak(s) <" + num +"x : " 
+                                            for (let k=0;k<x;k++)
+                                            {   streakG[r]=(index[k]-max_sequence+1);
+                                                r++;
+                                             
+                                            }
+                                            for (let k=0;k<x-1;k++)
+                                            {
+                                                for (let ii=streakG[k];ii<10000;ii++)
+                                                {
+                                                    if ( _games[ii].bust >num)
+                                                    {
+                                                        streakG[k]=ii;
+                                                        break;
+                                                    }
+                                                }
+                                                streakR[e]=Math.abs( streakG[k] - streakG[k+1]) ;
+                                                avggap+= streakR[e];
+                                                if (k==(x-2))
+                                                {
+                                        
+                                               responeText+= streakR[e] + " . ";
+                                                }
+                                                else 
+                                                {
+                                                    responeText+= streakR[e] + " , ";
+                                                   
+                                                }
+                                              
+                                             
+                                               e++;
+                                            }
+                                            avggap=avggap/(x-1);
+                                           
+                                            avggap=avggap.toFixed(2);
+                                            responeText+= "Avg gap: " + avggap ; 
+ 
+	
+    
+ 
+
+/*
+	 for (var k=0;k<Math.ceil(((len)*2+1)/2);k++)
+	 {
+         for (var n=index[k];n<10000;n++)
+         {
+             console.log(index[k]);
+             if ( _games[n].bust >num)
+             {
+                // console.log(n);
+                streakG[r]=n;
+               // console.log(  streakG[r]);
+                r++;
+                break;
+             }
+         }
+       
+         streakG[r]=(index[k]-max_sequence+1);
+         r++;
+         if (r==((len)*2+1))
+         {
+             break;
+         }
+          /*
+       for (var g=index[k];g>(index[k]-max_sequence);g--)
+       {
+
+           
+       } }
+     //  console.log(r);
+    for (var ii=1;ii<(r-2);ii+=2)
+    {
+      streakR[e]= Math.abs(streakG[ii]-streakG[ii+1]);
+      responeText+=streakR[e]+" games , ";
+      e++;
+    }     */
+say(responeText);
+     
+	 
+}
 function nyan(num)
                 {
                     var results=[];
@@ -754,8 +909,6 @@ function nyan(num)
                 {
                               
 
-
-//console.log(max_sequence+ " " + num+" " +len);
 	var sequence_count=0;
 	var start=0;
 	var index=[];
@@ -805,7 +958,7 @@ function nyan(num)
 	 for (var k=0;k<x;k++)
 	 {
         
-     responeText+= "Seen   " + (index[k]+1 ) +" games ago : " +"(" ; 
+     responeText+= "Seen   " + (index[k]-max_sequence+1 ) +" games ago : " +"(" ; 
        for (var g=index[k];g>(index[k]-max_sequence);g--)
        {
            ct++;
