@@ -642,6 +642,7 @@ function gapAdvance(num,operat,len,max_sequence)
                                                 r++;
                                              
                                             }
+                                            var max=-1000000,min=1000000;
                                             for (let k=0;k<x-1;k++)
                                             {
                                                 for (let ii=streakG[k];ii<10000;ii++)
@@ -653,6 +654,14 @@ function gapAdvance(num,operat,len,max_sequence)
                                                     }
                                                 }
                                                 streakR[e]=Math.abs( streakG[k] - streakG[k+1]) ;
+                                                if (streakR[e]>max)
+                                                {
+                                                    max=streakR[e];
+                                                }
+                                                if (streakR[e]<min)
+                                                {
+                                                    min=streakR[e];
+                                                }
                                                 avggap+= streakR[e];
                                                 if (k==(x-2))
                                                 {
@@ -668,6 +677,9 @@ function gapAdvance(num,operat,len,max_sequence)
                                              
                                                e++;
                                             }
+                                           
+                                            
+                                            responeText+= "Max: " +max +", Min: " + min +", "
                                             avggap=avggap/(x-1);
                                            
                                             avggap=avggap.toFixed(2);
