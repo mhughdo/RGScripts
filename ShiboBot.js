@@ -586,7 +586,7 @@ function gapAdvance(num,operat,len,max_sequence)
                                             }
                                             var streakG=[],r=0;
                                             var streakR=[],e=0;
-                                            responeText+= "The last " + (len-1) +"  streak(s) <" + num +"x : " 
+                                            responeText+= "The last " + (len-1) +"  streaks <" + num +"x : " 
                                             for (let k=0;k<x;k++)
                                             {   streakG[r]=(index[k]-max_sequence+1);
                                                 r++;
