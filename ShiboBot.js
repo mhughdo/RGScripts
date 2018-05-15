@@ -266,7 +266,7 @@ engine.chat("/unmute"+res); }
                      
                      else 
                      {
-                        gapAdvance(result[0],operat,result[1],result[2]);
+                       streakcount(result[0],operat,result[1],result[2]);
                        //  customStreak(result[0],operat,result[1],result[2]);
                      } 
                     }
@@ -434,7 +434,71 @@ engine.chat("/unmute"+res); }
 /*==================================
  Calculations for requests.
 ===================================*/
+function streakcount (max_sequence,operat,num,len)
+{
+    var sequence_count=0;
+	var start=0;
+	var index=[];
+    var x=0;
+   for (let i=0;i<100000;i++)
+   {
+       index[i]=0;
+   }
+    var responeText="";
 
+		
+                                for(var  i = 0; i<len;i++) {
+                          
+                            
+                                    if (_games[i].bust < num ) {
+                                      
+                                         sequence_count++; 
+                                        
+                                          if (sequence_count ==max_sequence) {
+                                            //  console.log(start);
+                                            start=i;
+                                          
+                                          if (start>index[x] )
+                                          	{
+                                          		index[x]=start;
+                                          x++;
+											  }
+                                          
+                                          
+                                          
+                                          
+                                           
+                                          }
+                                        }
+                                     else {
+                                        sequence_count = 0;
+                                       
+                                             } 
+                                     
+                                            }
+                                            
+                        
+	
+                                            responeText+=  "Last "+ len  + " games , Seen " + max_sequence +"streak < " +num +": " ;
+	 for (var k=0;k<x;k++)
+	 {
+        if (k==x-1)
+        {
+            responeText+=(index[k]-max_sequence+1 ) +"" ; 
+        }
+        else 
+        {
+            responeText+=(index[k]-max_sequence+1 ) +", " ; 
+        }
+       
+      
+          
+     }
+     responeText+= " games ago ";
+     say(responeText);
+	 
+	
+}
 function count(operat , target,len,lenr)
 {
     var results=[];
@@ -586,7 +650,7 @@ function gapAdvance(num,operat,len,max_sequence)
                                             }
                                             var streakG=[],r=0;
                                             var streakR=[],e=0;
-                                            responeText+= "The last " + (len-1) +"  streaks <" + num +"x : " 
+                                            responeText+= "The last " + (len-1) +"  streak(s) <" + num +"x : "  
                                             for (let k=0;k<x;k++)
                                             {   streakG[r]=(index[k]-max_sequence+1);
                                                 r++;
