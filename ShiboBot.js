@@ -479,23 +479,31 @@ function streakcount (max_sequence,operat,num,len)
                                             
                         
 	
-                                            responeText+=  "Last "+ len  + " games , Seen " + max_sequence +"streak < " +num +": " ;
-	 for (var k=0;k<x;k++)
-	 {
-        if (k==x-1)
-        {
-            responeText+=(index[k]-max_sequence+1 ) +"" ; 
-        }
-        else 
-        {
-            responeText+=(index[k]-max_sequence+1 ) +", " ; 
-        }
-       
-      
-          
-     }
-     responeText+= " games ago ";
-     say(responeText);
+                                            responeText+=  "Last "+ len  + " games , Seen " + max_sequence +" streak < " +num +"x : " ;
+                                           if ( ((index[0]-max_sequence+1 ) )  <0 || ((index[0]-max_sequence+1 ) ==undefined))
+                                           {
+                                               say("Streak not found in " + len +" games");
+                                           }
+                                           else 
+                                           {
+                                            for (var k=0;k<x;k++)
+                                            {
+                                               if (k==x-1)
+                                               {
+                                                   responeText+=(index[k]-max_sequence+1 ) +"" ; 
+                                               }
+                                               else 
+                                               {
+                                                   responeText+=(index[k]-max_sequence+1 ) +", " ; 
+                                               }
+                                              
+                                             
+                                                 
+                                            }
+                                            responeText+= " games ago ";
+                                            say(responeText);
+                                           }
+	
 	 
 	
 }
