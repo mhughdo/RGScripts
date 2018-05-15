@@ -266,7 +266,7 @@ engine.chat("/unmute"+res); }
                      
                      else 
                      {
-                       streakcount(result[0],operat,result[1],result[2]);
+                      gapAdvance(result[0],operat,result[1],result[2]);
                        //  customStreak(result[0],operat,result[1],result[2]);
                      } 
                     }
@@ -434,7 +434,7 @@ engine.chat("/unmute"+res); }
 /*==================================
  Calculations for requests.
 ===================================*/
-function streakcount (max_sequence,operat,num,len)
+function streakcount(num,operat,len,max_sequence)
 {
     var sequence_count=0;
 	var start=0;
@@ -447,7 +447,7 @@ function streakcount (max_sequence,operat,num,len)
     var responeText="";
 
 		
-                                for(var  i = 0; i<len;i++) {
+                                for(var  i = 0; i<_games.length;i++) {
                           
                             
                                     if (_games[i].bust < num ) {
@@ -463,7 +463,7 @@ function streakcount (max_sequence,operat,num,len)
                                           		index[x]=start;
                                           x++;
 											  }
-                                          
+                                          break;
                                           
                                           
                                           
@@ -479,31 +479,8 @@ function streakcount (max_sequence,operat,num,len)
                                             
                         
 	
-                                            responeText+=  "Last "+ len  + " games , Seen " + max_sequence +" streak < " +num +"x : " ;
-                                           if ( ((index[0]-max_sequence+1 ) )  <0 || ((index[0]-max_sequence+1 ) ==undefined))
-                                           {
-                                               say("Streak not found in " + len +" games");
-                                           }
-                                           else 
-                                           {
-                                            for (var k=0;k<x;k++)
-                                            {
-                                               if (k==x-1)
-                                               {
-                                                   responeText+=(index[k]-max_sequence+1 ) +"" ; 
-                                               }
-                                               else 
-                                               {
-                                                   responeText+=(index[k]-max_sequence+1 ) +", " ; 
-                                               }
-                                              
-                                             
-                                                 
-                                            }
-                                            responeText+= " games ago ";
-                                            say(responeText);
-                                           }
-	
+                                         return   ((index[0]-max_sequence+1 ) )  ;
+                                           
 	 
 	
 }
@@ -658,7 +635,8 @@ function gapAdvance(num,operat,len,max_sequence)
                                             }
                                             var streakG=[],r=0;
                                             var streakR=[],e=0;
-                                            responeText+= "The last " + (len-1) +"  streak(s) <" + num +"x : "  
+                                          //  responeText+= "The last " + (len-1) +"  streak(s) <" + num +"x : "  
+                                          responeText+= (streakcount(num,operat,len,max_sequence)+1)  + " games ago. ";
                                             for (let k=0;k<x;k++)
                                             {   streakG[r]=(index[k]-max_sequence+1);
                                                 r++;
