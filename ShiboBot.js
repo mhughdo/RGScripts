@@ -594,11 +594,14 @@ function gapAdvance(num,operat,len,max_sequence)
 	var start=0;
 	var index=[];
     var x=0;
+    var co=0;
+    var responseText2="";
+    var responseText3="";
    for (let i=0;i<100000;i++)
    {
        index[i]=0;
    }
-    var responeText="";
+    var responseText="";
 
 		for (var m=0;m<len;m++)
 		{
@@ -636,7 +639,13 @@ function gapAdvance(num,operat,len,max_sequence)
                                             var streakG=[],r=0;
                                             var streakR=[],e=0;
                                           //  responeText+= "The last " + (len-1) +"  streak(s) <" + num +"x : "  
-                                          responeText+= (streakcount(num,operat,len,max_sequence)+1)  + " games ago. ";
+         if ((streakcount(num,operat,len,max_sequence)+1)<0 || (streakcount(num,operat,len,max_sequence)+1)==undefined)
+                                          {
+                                             say("Never seen such streak!");
+                                          }
+                                          else 
+                                          {
+                                          responseText+= (streakcount(num,operat,len,max_sequence)+1)  + " games ago. ";
                                             for (let k=0;k<x;k++)
                                             {   streakG[r]=(index[k]-max_sequence+1);
                                                 r++;
@@ -666,24 +675,41 @@ function gapAdvance(num,operat,len,max_sequence)
                                                 if (k==(x-2))
                                                 {
                                         
-                                               responeText+= streakR[e] + " . ";
+                                               responseText+= streakR[e] + " . ";
                                                 }
                                                 else 
                                                 {
-                                                    responeText+= streakR[e] + " , ";
+                                                    responseText+= streakR[e] + " , ";
                                                    
                                                 }
                                               
-                                             
+                                                if(responseText.length >470&& co==0  )
+                                                {
+                                                co++;
+                                                responseText2+=responseText;
+                                                responseText="";
+                                                }
+                                                if (responseText.length >460 && co==1)
+                                                {
+                                                co++;
+                                                responseText3+=responseText;
+                                                responseText="";
+                                                }
                                                e++;
                                             }
                                            
+          
+            
+            
+            
+          
+                                           
                                             
-                                            responeText+= "Max: " +max +", Min: " + min +", "
+                                            responseText+= "Max: " +max +", Min: " + min +", "
                                             avggap=avggap/(x-1);
                                            
                                             avggap=avggap.toFixed(2);
-                                            responeText+= "Avg gap: " + avggap ; 
+                                            responseText+= "Avg gap: " + avggap ; 
  
 	
     
@@ -724,8 +750,25 @@ function gapAdvance(num,operat,len,max_sequence)
       responeText+=streakR[e]+" games , ";
       e++;
     }     */
-say(responeText);
-     
+  
+    if (co==1)
+    {
+    say( responseText2);
+    setTimeout(function(){ say(responseText); }, 500);
+    
+    }
+    else if (co>1)
+    {
+    say( responseText2);
+    setTimeout(function(){ say(responseText3); }, 500);
+    setTimeout(function(){ say(responseText); }, 500);
+    
+    }
+    else 
+    {
+    say( responseText);
+    }
+}
 	 
 }
 function nyan(num)
