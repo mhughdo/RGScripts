@@ -639,12 +639,8 @@ function gapAdvance(num,operat,len,max_sequence)
                                             var streakG=[],r=0;
                                             var streakR=[],e=0;
                                           //  responeText+= "The last " + (len-1) +"  streak(s) <" + num +"x : "  
-         if ((streakcount(num,operat,len,max_sequence)+1)<0 || (streakcount(num,operat,len,max_sequence)+1)==undefined)
-                                          {
-                                             say("Never seen such streak!");
-                                          }
-                                          else 
-                                          {
+        
+                                       
                                           responseText+= (streakcount(num,operat,len,max_sequence)+1)  + " games ago. ";
                                             for (let k=0;k<x;k++)
                                             {   streakG[r]=(index[k]-max_sequence+1);
@@ -705,13 +701,57 @@ function gapAdvance(num,operat,len,max_sequence)
           
                                            
                                             
-                                            responseText+= "Max: " +max +", Min: " + min +", "
-                                            avggap=avggap/(x-1);
                                            
-                                            avggap=avggap.toFixed(2);
-                                            responseText+= "Avg gap: " + avggap ; 
- 
-	
+                     if ((streakcount(num,operat,len,max_sequence)+1)<0 || (streakcount(num,operat,len,max_sequence)+1)==undefined )
+                                            {
+                                               say("Never seen such streak!");
+                                            }
+                     else  if (((streakcount(num,operat,len,max_sequence)+1) >0 && max==-1000000 )|| ((streakcount(num,operat,len,max_sequence)+1) >0 && avggap==undefined)  )
+                                            {
+                                                if (co==1)
+                                                {
+                                                say( responseText2);
+                                                setTimeout(function(){ say(responseText); }, 500);
+                                                
+                                                }
+                                                else if (co>1)
+                                                {
+                                                say( responseText2);
+                                                setTimeout(function(){ say(responseText3); }, 500);
+                                                setTimeout(function(){ say(responseText); }, 500);
+                                                
+                                                }
+                                                else 
+                                                {
+                                                say( responseText);
+                                                }
+                                            }
+                                            else 
+                                            {
+                                                responseText+= "Max: " +max +", Min: " + min +", "
+                                                avggap=avggap/(x-1);
+                                               
+                                                avggap=avggap.toFixed(2);
+                                                responseText+= "Avg gap: " + avggap ; 
+     
+                                                if (co==1)
+    {
+    say( responseText2);
+    setTimeout(function(){ say(responseText); }, 500);
+    
+    }
+    else if (co>1)
+    {
+    say( responseText2);
+    setTimeout(function(){ say(responseText3); }, 500);
+    setTimeout(function(){ say(responseText); }, 500);
+    
+    }
+    else 
+    {
+    say( responseText);
+    }
+                                            }
     
  
 
@@ -751,24 +791,8 @@ function gapAdvance(num,operat,len,max_sequence)
       e++;
     }     */
   
-    if (co==1)
-    {
-    say( responseText2);
-    setTimeout(function(){ say(responseText); }, 500);
     
-    }
-    else if (co>1)
-    {
-    say( responseText2);
-    setTimeout(function(){ say(responseText3); }, 500);
-    setTimeout(function(){ say(responseText); }, 500);
-    
-    }
-    else 
-    {
-    say( responseText);
-    }
-}
+
 	 
 }
 function nyan(num)
