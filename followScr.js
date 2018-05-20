@@ -1,4 +1,6 @@
-/*¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|
+
+
+ /*¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|
 //  Bustabit Bonus Sniper v0.2R8 -  Made by http://dexontech.net/    |
 //___________________________________________________________________|
 //
@@ -12,80 +14,89 @@
 */
 
 var	StartingBet		=	100, //(INTEGER) Initial bet that'll snipe the bonus. Note: 100 = 1 bit.
-	AutoCashout		=	1000000; //(FLOAT) Will increase +1.30x of the last bet if lost.
+AutoCashout		=	1000000; //(FLOAT) Will increase +1.30x of the last bet if lost.
 
 //--------> EDIT OVER THIS LINE <--------
 var user='Wesley';
 var bet=StartingBet;
 var play=false;
+var p =-1;
 engine.on('game_starting', function(info) {
-	//var bet = 0;
-	//console.clear();
-	console.log("Locking target...")
-	//if(engine.lastGamePlay() == "LOST") bet = (lastBet/100) * IncreaseOnLoss;
-//	else bet = StartingBet / 100;
-	//lastBet = bet*100;
-    //bet = Math.round(bet)*100;
-    console.log(bet/100);
-    if (play==false && bet!= StartingBet)
-    {
-        bet=StartingBet;
-    }
-    if (play && (bet/100)<=50)
-    {
-    engine.placeBet(bet, AutoCashout, function(){ });
-    }
-	
+    setTimeout(function(){  
+     p=x(user);
+  // console.log(p);
+if (p==0 && bet!= StartingBet)
+{
+    bet=StartingBet;
+}
+if (p==1)
+{
+   // console.log(bet);
+engine.placeBet(bet, AutoCashout, function(){ });
+}
+}, 3000);
 });
 
-var bets = [];
 
 engine.on('game_crash', function(data) {
-    if  (engine.lastGamePlay()=='WON' )   { 
-        bet=StartingBet;
-    
- }
+if  (engine.lastGamePlay()=='WON' )   { 
+    bet=StartingBet;
+
+}
 });
 engine.on('game_started', function(data) {
-	if(engine.lastGamePlayed()) bets = []; // Reset bets
-	for(var i=0; i<Object.keys(data).length; i++){
-		bets.push(data[Object.keys(data)[i]].bet); 
-		if (data[Object.keys(data)[i]].username ==user)
-		{
-            play=true;
-           
-            
-            bet=data[Object.keys(data)[i]].bet;
-            bet=parseInt(bet);
-           
-            bet=Math.floor(bet);
-          
-        
-            break;
-        }
-        else 
-        {
-            play=false;
-        }
-       
-		// Get all bets
-	}
+if (p==1)
+for(var i=0; i<Object.keys(data).length; i++){
 
- /*
-	for(var i=0; i<Object.keys(data).length; i++){
-		if(data[Object.keys(data)[i]].bet == bets.max()){
-			highestBetUser = data[Object.keys(data)[i]].username; // Get the highest one!
-		}
-	} 
-    console.log("Target acquired! ("+highestBetUser+")");*/
+    if (data[Object.keys(data)[i]].username ==user)
+    {
+      
+       
+        
+        bet=data[Object.keys(data)[i]].bet;
+        bet=parseInt(bet);
+       
+        bet=Math.floor(bet);
+      
+    
+        break;
+    }
+ 
+    // Get all bets
+}
+
+/*
+for(var i=0; i<Object.keys(data).length; i++){
+    if(data[Object.keys(data)[i]].bet == bets.max()){
+        highestBetUser = data[Object.keys(data)[i]].username; // Get the highest one!
+    }
+} 
+console.log("Target acquired! ("+highestBetUser+")");*/
 });
 
 engine.on('cashed_out', function(data) {
-    if(data.username == user){
-    	setTimeout(function(){ engine.cashOut(); }, 0);
-    	console.log("Target hit!");
-    }
+if(data.username == user){
+    setTimeout(function(){ engine.cashOut(); }, 0);
+  //  console.log("Target hit!");
+}
 });
 
-// Some use less function:
-
+  function x(user)
+  {
+    
+        var parentDOM = document.getElementById("game-right-container");
+            
+            var test=parentDOM.getElementsByClassName("table-inner");
+    var tex=test[0].innerText;
+   // console.log(user);
+    if (tex.indexOf(user)!=-1)
+    {
+    return 1;
+    }
+    else 
+    {
+    return 0;} 
+   
+  }
+  
+  
