@@ -295,7 +295,8 @@ engine.chat("/unmute"+res); }
         else if (message.startsWith("!gapmax") ) {
             var operat;
             gapmax=true;
-            var wwtk=data.message.match(/x/g);
+
+           // var wwtk=data.message.match(/x/g);
             gap=false;
             var res = data.message.match(/>/g);
          var res1= data.message.match(/</g);
@@ -309,17 +310,16 @@ engine.chat("/unmute"+res); }
         }
         var regex = /[+-]?\d+(\.\d+)?/g;
         var result = data.message.match(regex).map(function(v) { return parseFloat(v); });
-        if (wwtk!=null)
-        {
+        
            if (result.length==1)
            {
-                    bust(result[0],operat,1,gap,gapmax);
+                    bust(1,operat,result[0],gap,gapmax);
            }
            else 
            {
               bust(result[1],operat,result[0],gap,gapmax);
            }
-        }
+        /*
         else {
          if (result.length==1)
          {
@@ -329,11 +329,12 @@ engine.chat("/unmute"+res); }
          {
             bust(result[0],operat,result[1],gap,gapmax);
          }
-       }
+       } */ 
         }
         else if (message.startsWith("!gap") ) {
             var operat;
             gap=true;
+            gapmax=false;
             var wwtk=data.message.match(/x/g);
             var res = data.message.match(/>/g);
          var res1= data.message.match(/</g);
@@ -370,7 +371,7 @@ engine.chat("/unmute"+res); }
        }
         } 
         
-        else if ((message.startsWith("!")&& message.length>1) ||message.startsWith("!bst") || message.startsWith("!bust") || message.startsWith("!0") ) {
+        else if ((message.startsWith("!")&& message.length>1 && !isNaN(message[1]) && !isNaN(parseInt(message[1]))) ||message.startsWith("!bst") || message.startsWith("!bust") || message.startsWith("!0") ) {
             var operat;
             gap=false;
             var regex = /[+-]?\d+(\.\d+)?/g;
@@ -1255,7 +1256,7 @@ function nyan(num)
                 
             }
         }
-        else  if (gap==true)
+        else  if (gap==true && gapmax==false)
         {
             var co=0;
 var responseText2="";
@@ -1319,7 +1320,7 @@ say( responseText);
               
 //say(responseText);
         }
-        else if (gapmax==true)
+        else if (gapmax==true && gap==false)
         {
             
             var co=0;
@@ -1335,21 +1336,19 @@ say( responseText);
              //console.log(_results[_j]+" ");
              _j++;
             }
-            for (let i=1;i<_j;i++)
-            {
-                for (let j=i+1;j<_j;j++)
-                {
-                    if (_results[i]<_results[j])
-                    {
-                      var tempr=_results[i];
-                      _results[i]=_results[j];
-                      _results[j]=tempr;
-                    }
-                }
-            }
+            _results.sort(function(a, b) {
+  return b-a;
+});
+
+           
+           if (num==1)
+           {
+            responseText+= (_results[0]-1)  + " games ";
+           }
             //responseText+="Current ( " + (_results[0]-1) + "x)  : " + (resultsid[0]+1) +" games ago. " + "  " ;
-            var ct3=0;
-            for (let i=1;i<_j;i++)
+           else 
+           { var ct3=0;
+            for (let i=0;i<_j;i++)
             {
                 if (i!=_j-1)
              {
@@ -1376,7 +1375,8 @@ say( responseText);
             {
                 break;
             }
-            }
+            }}
+           
             
             
             
