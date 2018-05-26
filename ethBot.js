@@ -1572,7 +1572,7 @@ function genGameHash(serverSeed) {
 };
 
 function crashPointFromHash(serverSeed) {
-    var hash = hmac(serverSeed, "000000000000000007a9a31ff7f07463d91af6b5454241d5faf282e5e0fe1b3a");
+    var hash = hmac(serverSeed, "0x8039f1f45f2df637488cbdbb3f2eb86615a10fe96a7ce79f721355035f3adb59");
 
     /* In 1 of 101 games the game crashes instantly. */
     if (divisible(hash, 101)) {
