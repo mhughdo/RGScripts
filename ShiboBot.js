@@ -1271,7 +1271,7 @@ for (let i=0;i<results.length-1;i++)
  //console.log(_results[_j]+" ");
  _j++;
 }
-responseText+="Current ( " + (_results[0]-1) + "x) : " + (resultsid[0]+1) +" games ago. " + ",  " ;
+responseText+="Current ( " + (_results[0]) + "x) : " + (resultsid[0]+1) +" games ago. " + ",  " ;
 for (let i=1;i<_j;i++)
 {
  if (i!=_j-1)
@@ -1343,7 +1343,7 @@ say( responseText);
            
            if (num==1)
            {
-            responseText+= (_results[0]-1)  + " games ";
+            responseText+= (_results[0])  + " games ";
            }
             //responseText+="Current ( " + (_results[0]-1) + "x)  : " + (resultsid[0]+1) +" games ago. " + "  " ;
            else 
