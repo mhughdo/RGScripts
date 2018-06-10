@@ -1,14 +1,10 @@
-/*
-	Follower Bot for Ethcrash.io
-    Developed by Darksoul
-    Donations are appreciated on account: darksoul or -DarkSoul- on ethcrash
-*/
 
-var user = "SeePizza"; //User to follow
 
-var autocashout = "10000" //Target multiplier to cashout automatically if following user doesn't cash out.
+var user = "Wesley"; 
 
-var baseBet = 1; //Amount to bet if constant bet is on
+var autocashout = "10000";
+
+var baseBet = 1;
 var bet=baseBet;
 engine.on('player_bet', function(data) {
     if (data.username == user) {
@@ -20,7 +16,7 @@ engine.on('player_bet', function(data) {
                     result = result.split("<h5>");
 var idx=result[4].indexOf("mNano");
 result=result[4].slice(0,idx);
-console.log(result);
+
 result=result.replace(",","");
 result=parseFloat(result);
   bet = balance - result;
