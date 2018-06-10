@@ -1328,9 +1328,9 @@ say( responseText);
             var responseText3="";
             
                         var _results=[],_j=0;
-            _results[_j]=results[0]; 
+            _results[_j]=0; 
             _j++;
-            for (let i=0;i<results.length-1;i++)
+            for (let i=1;i<results.length-1;i++)
             {
              _results[_j]=parseInt(Math.abs(resultsid[i]-resultsid[i+1]));
              //console.log(_results[_j]+" ");
@@ -1343,7 +1343,7 @@ say( responseText);
            
            if (num==1)
            {
-            responseText+= (_results[0])  + " games ";
+            responseText+= (_results[0]-1)  + " games ";
            }
             //responseText+="Current ( " + (_results[0]-1) + "x)  : " + (resultsid[0]+1) +" games ago. " + "  " ;
            else 
