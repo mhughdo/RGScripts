@@ -10,7 +10,7 @@ var _ignore = [
 engine.on("msg", function (data) {
     var gap=false;
 var gapmax=false;
-    if (data.channelName === 'spam')
+    if (data.channelName === 'spam'&&data.username!='darksoul'&&data.username!='-DarkSoul-')
     {
 if (data.username == "livswild12")
 {
@@ -266,7 +266,8 @@ engine.chat("/unmute"+res); }
                      
                      else 
                      {
-                      gapAdvance(result[0],operat,result[1],result[2]);
+                         customStreak(result[0],operat,result[1],result[2]);
+                    //  gapAdvance(result[0],operat,result[1],result[2]);
                        //  customStreak(result[0],operat,result[1],result[2]);
                      } 
                     }
@@ -1274,7 +1275,7 @@ for (let i=0;i<results.length-1;i++)
  //console.log(_results[_j]+" ");
  _j++;
 }
-responseText+="Current ( " + (_results[0]-1) + "x) : " + (resultsid[0]+1) +" games ago. " + ",  " ;
+responseText+="Current ( " + (_results[0]) + "x) : " + (resultsid[0]+1) +" games ago. " + ",  " ;
 for (let i=1;i<_j;i++)
 {
  if (i!=_j-1)
@@ -1331,9 +1332,9 @@ say( responseText);
             var responseText3="";
             
                         var _results=[],_j=0;
-            _results[_j]=results[0]; 
+            _results[_j]=0; 
             _j++;
-            for (let i=0;i<results.length-1;i++)
+            for (let i=1;i<results.length-1;i++)
             {
              _results[_j]=parseInt(Math.abs(resultsid[i]-resultsid[i+1]));
              //console.log(_results[_j]+" ");
