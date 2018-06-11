@@ -817,7 +817,7 @@ function nyan(num)
                       }
                       if (num==1)
                       {
-                        responseText+=  (resultsid[0]) + " games ago "+"("+ results[0] +"x"+")"+". " +"https://raigames.io/game/"+(_games[0].id-resultsid[0]);
+                        responseText+=  (resultsid[0]) + " games ago "+"("+ results[0] +"x"+")"+". " +"https://nanogames.io/game/"+(_games[0].id-resultsid[0]);
                        var time= GetTime((_games[0].id-resultsid[0]));
                       
                         say("Meow Meow : " + responseText +"  (" + time + ")");
@@ -1409,7 +1409,7 @@ function GetTime(id)
 {
     var res1="";
    // var id=11159868;
-    var tex= 'https://raigames.io/game/' + id;
+    var tex= 'https://nanogames.io/game/' + id;
     //var y = document.querySelectorAll("small[href=tex]");
     //console.log(y[0].innerText);
     //console.log(tex);
