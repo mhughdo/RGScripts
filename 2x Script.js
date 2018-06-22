@@ -1,7 +1,7 @@
 var baseBet=1;
 var baseCashout = 2;
 var currentBet=baseBet ;
-var maxLosses=6;
+var maxLosses=4;
 var currentCashout = baseCashout;
 var lossStreak = 0;
 //var multi=[2,1.25,1.31,1.33,1.33,1.35,1.35,1.35,1.35,1.35];
@@ -27,8 +27,8 @@ engine.on('game_crash', function(data) {
 	if (lossStreak==maxLosses) engine.stop();
         
     play=false;
-         currentBet*=10;
-         currentCashout=1.13;
+         currentBet*=11;
+         currentCashout=1.1;
 		
 		
 	}
