@@ -1,7 +1,7 @@
 var baseBet=1;
 var baseCashout = 2;
 var currentBet=baseBet ;
-var maxLosses=4;
+var maxLosses=3;
 var currentCashout = baseCashout;
 var lossStreak = 0;
 //var multi=[2,1.25,1.31,1.33,1.33,1.35,1.35,1.35,1.35,1.35];
@@ -23,17 +23,28 @@ engine.on('game_crash', function(data) {
 	
 	if(engine.lastGamePlay()=='LOST'){
 
-		lossStreak++;
+        lossStreak++;
+        key++;
 	if (lossStreak==maxLosses) engine.stop();
         
     play=false;
-         currentBet*=11;
-         currentCashout=1.1;
+    if (key==1)
+    {
+        currentBet*=100;
+        currentCashout=1.00; 
+    }
+    else if (key==2)
+    {
+        currentBet*=10;
+        currentCashout=1.1; 
+    }
+       
 		
 		
 	}
 	else if (engine.lastGamePlay()=="WON")
     {
+        key=0;
         lossStreak=0;
         currentBet=baseBet;
         currentCashout=baseCashout;
