@@ -52,10 +52,52 @@ engine.chat("/unmute"+res); }
           say(" xrb_35ykxd8nh139qkh4d1qaodgw11js3u64uaj86ziu8hzrnimayg735qyiz6p6. Thanks :P ");
           
         } 
-        else if (message.startsWith("!prb joking125") || message.startsWith("!prob joking125") || message.startsWith("!probability joking125")) {
-         
+        else if (message.startsWith("!joking125")) {
+            var jk125=[1.08,1.25,1.25,1.25,1.25,1.25,1.25,1.25,1.25];
+            jk125=jk125.reverse();
+            var msg=  data.message.replace("!joking125","");
+            var regex = /[+-]?\d+(\.\d+)?/g;
+            if (msg.length==0) 
+            {
+                       joking125(jk125,5,1);
+            }
+            else {
+            var result = msg.match(regex).map(function(v) { return parseFloat(v); });
+          if (result.length==1)
+            {
+                joking125(jk125,result[0],1);
+            }
+            else if (result.length==2)
+            {
+                joking125(jk125,result[0],result[1]);
+            }
         }
-        else if (message.startsWith("!prb joking4") || message.startsWith("!prob joking4") || message.startsWith("!probability joking4")) {
+        }
+        else if ( message.startsWith("!joking4") ) {
+            var jk4=[1.08,1.25,1.31,1.33,1.33,1.33,1.33,1.33,1.33];
+           
+       
+            var msg=  data.message.replace("!joking4","");
+            var regex = /[+-]?\d+(\.\d+)?/g;
+            if (msg.length==0) 
+            {
+
+                       joking4(jk4,5,1);
+            }
+            else if (msg.length>=1)
+            {
+            var result = msg.match(regex).map(function(v) { return parseFloat(v); });
+            
+            if (result.length==1)
+            {
+                
+                joking4(jk4,result[0],1);
+            }
+            else if (result.length==2)
+            {
+                joking4(jk4,result[0],result[1]);
+            }
+        }
        
         }
         else if (message.startsWith("!prb") || message.startsWith("!prob") || message.startsWith("!probability")) {
@@ -435,6 +477,112 @@ engine.chat("/unmute"+res); }
 /*==================================
  Calculations for requests.
 ===================================*/
+function joking4 (jk4,len,num)
+{
+    var j= (len-1);
+    var check=0;
+    var index=[]; var k=0;
+
+    for (let i=0;i<_games.length;i++)
+    {
+     
+       
+            if (_games[i].bust<jk4[j] )
+             {
+             j--;
+            check++;
+                    
+             }
+             else 
+             {check=0; j=(len-1);}
+             if (check==len)
+         {
+            index[k]=i;
+            k++;
+             j=(len-1);
+             if (k==num)  break;
+              } 
+    
+    }
+    var responeTex="";
+    if (k==1)
+    {
+    for ( let i=0;i<k;i++)
+    {
+        responeTex+= (_games[0].id-_games[index[i]].id+ 1) +" games ago :  ";
+        var temp=index[i];
+      for (let x=0;x<len;x++)
+      {
+         responeTex+= _games[temp].bust+", ";
+         temp--;
+      }
+    } 
+    say(responeTex);
+  }
+  else 
+  {
+    for ( let i=0;i<k;i++)
+    {
+        responeTex+= (_games[0].id-_games[index[i]].id+ 1) +" games ago,  ";
+    }
+    say(responeTex);
+      
+  }
+
+}
+function joking125(jk125,len,num)
+{
+    var j=(len-1);
+    var check=0;
+    var index=[]; var k=0;
+
+    for (let i=0;i<_games.length;i++)
+    {
+     
+       
+            if (_games[i].bust<jk4[j] )
+             {
+             j--;
+            check++;
+                    
+             }
+             else 
+             {check=0; j=(len-1);}
+             if (check==len)
+         {
+            index[k]=i;
+            k++;
+             j=(len-1);
+             if (k==num)  break;
+              } 
+    
+    }
+    var responeTex="";
+    if (k==1)
+    {
+    for ( let i=0;i<k;i++)
+    {
+        responeTex+= (_games[0].id-_games[index[i]].id+ 1) +" games ago :  ";
+        var temp=index[i];
+      for (let x=0;x<len;x++)
+      {
+         responeTex+= _games[temp].bust+", ";
+         temp--;
+      }
+    } 
+    say(responeTex);
+  }
+  else 
+  {
+    for ( let i=0;i<k;i++)
+    {
+        responeTex+= (_games[0].id-_games[index[i]].id+ 1) +" games ago,  ";
+    }
+    say(responeTex);
+      
+  }
+
+}
 function streakcount(num,operat,len,max_sequence)
 {
     var sequence_count=0;
