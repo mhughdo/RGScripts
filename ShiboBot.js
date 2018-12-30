@@ -472,7 +472,7 @@ function joking125(jk125, len, num) {
     for (let i = 0; i < _games.length; i++) {
 
 
-        if (_games[i].bust < jk4[j]) {
+        if (_games[i].bust < jk125[j]) {
             j++;
             check++;
 
